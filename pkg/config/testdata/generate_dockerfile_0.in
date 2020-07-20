@@ -1,0 +1,10 @@
+name: my-app
+output_binary: /app
+build_command: go build -o {{.output_binary}}
+runtime_image: golang:1.14
+run_command: '{{.output_binary}}'
+debugger_port: 40000
+debugger_enabled: true
+expose_ports:
+  - 8080:8080
+  - 8081:8081
