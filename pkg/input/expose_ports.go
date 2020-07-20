@@ -49,7 +49,6 @@ func (p *PromptExposePort) Run() error {
 	items := append(p.ExposePorts, doneItem)
 	addRemovePrefix(items)
 
-	index := -1
 	var result string
 
 	for result != doneItem {
@@ -61,6 +60,7 @@ func (p *PromptExposePort) Run() error {
 
 		cleanResults(items)
 		var err error
+		var index int
 		index, result, err = prompt.Run()
 		if err != nil {
 			return err
