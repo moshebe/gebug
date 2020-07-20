@@ -1,0 +1,17 @@
+name: test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        goVer: [1.13, 1.14]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.goVer }}
+      - run: go test -cover ./...
+        env:
+          CGO_ENABLED: 0
