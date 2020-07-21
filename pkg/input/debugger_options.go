@@ -2,8 +2,9 @@ package input
 
 import (
 	"fmt"
-	"gebug/pkg/config"
+
 	"github.com/manifoldco/promptui"
+	"github.com/moshebe/gebug/pkg/config"
 )
 
 type PromptDebuggerOptions struct {

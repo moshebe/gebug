@@ -1,13 +1,15 @@
 package input
 
 import (
-	"gebug/pkg/config"
-	"gebug/pkg/osutil"
-	"github.com/pkg/errors"
-	"go.uber.org/zap"
 	"io/ioutil"
 	"os"
 	"path"
+
+	"github.com/moshebe/gebug/pkg/osutil"
+
+	"github.com/moshebe/gebug/pkg/config"
+	"github.com/pkg/errors"
+	"go.uber.org/zap"
 )
 
 type ConfigPrompt interface {

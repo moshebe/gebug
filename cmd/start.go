@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"fmt"
-	"gebug/pkg/config"
-	"gebug/pkg/input"
-	"gebug/pkg/osutil"
+	"path"
+
+	"github.com/moshebe/gebug/pkg/config"
+	"github.com/moshebe/gebug/pkg/input"
+	"github.com/moshebe/gebug/pkg/osutil"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
-	"path"
 )
 
 var skipGenerate bool

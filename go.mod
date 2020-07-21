@@ -1,4 +1,4 @@
-module gebug
+module github.com/moshebe/gebug
 
 go 1.14
 

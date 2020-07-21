@@ -1,9 +1,10 @@
 package input
 
 import (
-	"gebug/pkg/config"
-	"github.com/manifoldco/promptui"
 	"strings"
+
+	"github.com/manifoldco/promptui"
+	"github.com/moshebe/gebug/pkg/config"
 )
 
 const (
