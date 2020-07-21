@@ -32,8 +32,10 @@ services:
       - SYS_PTRACE{{end}}
     volumes:
       - ../:/src:ro
-    ports:{{ range $key, $value := .ExposePorts }}
-      - {{ $value }}{{ end }}
+{{- if .ExposePorts}}
+    ports:{{range $key, $value := .ExposePorts}}
+      - {{$value}}{{end}}
+{{- end}}
 {{if .DebuggerEnabled}}      - {{.DebuggerPort}}:{{.DebuggerPort}}{{end}}`, writer)
 }
 
