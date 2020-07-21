@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/manifoldco/promptui"
 	"github.com/moshebe/gebug/pkg/input"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
@@ -28,7 +29,11 @@ var initCmd = &cobra.Command{
 		}, workDir)
 
 		if err != nil {
-			zap.L().Fatal("Failed to initialize project", zap.Error(err))
+			if err == promptui.ErrInterrupt {
+				zap.L().Info("Ignoring unsaved changes due to user cancellation (^C)")
+			} else {
+				zap.L().Fatal("Failed to initialize project", zap.Error(err))
+			}
 		}
 	},
 }
