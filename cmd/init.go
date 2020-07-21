@@ -30,7 +30,7 @@ var initCmd = &cobra.Command{
 
 		if err != nil {
 			if err == promptui.ErrInterrupt {
-				zap.L().Info("Ignoring unsaved changes due to user cancellation (^C)")
+				zap.L().Info("init command was interrupted by the user, ignoring unsaved changes...")
 			} else {
 				zap.L().Fatal("Failed to initialize project", zap.Error(err))
 			}
