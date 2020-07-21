@@ -5,7 +5,6 @@ A tool that makes debugging of Dockerized Go applications super easy by enabling
 ![](https://github.com/moshebe/gebug/workflows/lint/badge.svg)
 ![](https://github.com/moshebe/gebug/workflows/test/badge.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![HitCount](http://hits.dwyl.com/moshebe/gebug.svg)](http://hits.dwyl.com/moshebe/gebug)
 ---
 # Installing
 ```console
@@ -46,23 +45,23 @@ Use "gebug [command] --help" for more information about a command.
 ![](assets/demo-goland-debugger.gif)
 
 # How Does It Work
-Nothing special, no voodoo. Gebug just handles the Dockerfile and docker-compose configuration files generation with a easy-to-use command line utility.
-You can find the generated files in your project under `.gebug` directory.
+Nothing special, no voodoo. Gebug just handles the Dockerfile and docker-compose configuration files generation with a easy-to-use command line utility.    
+You can find the generated files in your project under `.gebug` directory.  
 We are all programmers and I know you like to play with your toys, so feel free to edit any of those files in order to fit your use-case. 
 Just make sure to run `gebug start --skip-generate` so the next run won't override your changes.
 
 Let's examine the `config.yaml` fields so you will feel more comfortable editing as you wish:
 
-| Field            	| Default                          	| Description                                                                                                                                                                                                                             	|
-|------------------	|----------------------------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
-| name             	| ""                               	| application/project name                                                                                                                                                                                                                	|
-| output_binary    	| "/app"                           	| output binary artifact inside the runtime container                                                                                                                                                                                     	|
-| build_command    	| "go build -o {{.output_binary}}" 	| build command inside the runtime container.  Note you can reference other configuration fields. When enabling Debugger `-gcflags="all=-N -l"` will be appended  to the build command to stop compiler optimization and symbol removing. 	|
-| run_command      	| "{.output_binary}}"              	| run command, probably most of the time will just be the binary artifact path                                                                                                                                                            	|
-| runtime_image    	| "golang:1.14"                    	| base Docker image for the runtime container                                                                                                                                                                                             	|
-| debugger_enabled 	| false                            	| whether to enable delve debugger inside the container or just use hot-reload                                                                                                                                                            	|
-| debugger_port    	| 40000                            	| delve debugger listen port, relevant only if `debugger_enabled` was set                                                                                                                                                                 	|
-| expose_ports     	| []                               	| list of ports to expose inside the container. Uses the same syntax as docker-compose for mapping between host and container ports(e.g: "8080:8080"). No need to add the delve debugger listen port as it will be auto-added.            	|
+| Field            	| Default                          	    | Description                                                                                                                                                                                                                             	|
+|------------------	|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| name             	|                                	    | application/project name                                                                                                                                                                                                                	|
+| output_binary    	| /app                           	    | output binary artifact inside the runtime container                                                                                                                                                                                     	|
+| build_command    	| go build -o {{.output_binary}}  	    | build command inside the runtime container.  Note you can reference other configuration fields. When enabling Debugger `-gcflags="all=-N -l"` will be appended  to the build command to stop compiler optimization and symbol removing. 	|
+| run_command      	| {.output_binary}}              	    | run command, probably most of the time will just be the binary artifact path                                                                                                                                                            	|
+| runtime_image    	| golang:1.14                    	    | base Docker image for the runtime container                                                                                                                                                                                             	|
+| debugger_enabled 	| false                            	    | whether to enable delve debugger inside the container or just use hot-reload                                                                                                                                                            	|
+| debugger_port    	| 40000                            	    | delve debugger listen port, relevant only if `debugger_enabled` was set                                                                                                                                                                 	|
+| expose_ports     	| []                               	    | list of ports to expose inside the container. Uses the same syntax as docker-compose for mapping between host and container ports(e.g: "8080:8080"). No need to add the delve debugger listen port as it will be auto-added.            	|
 
 # License
 Gebug is released under the Apache 2.0 license. See LICENSE.
