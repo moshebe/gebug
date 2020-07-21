@@ -2,8 +2,9 @@ package config
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var mockConfig = &Config{
@@ -34,6 +35,31 @@ services:
       - 8080
 `,
 		out.String())
+}
+
+func TestConfig_RenderDockerComposeFile_NoPorts(t *testing.T) {
+	portsTable := [][]string{
+		nil,
+		make([]string, 0),
+	}
+
+	for _, ports := range portsTable {
+		out := bytes.NewBufferString("")
+		mockConfig.ExposePorts = ports
+		err := mockConfig.RenderDockerComposeFile(out)
+		assert.NoError(t, err)
+		assert.Equal(t,
+			`version: '3'
+services:
+  gebug-my-app:
+    build:
+      context: ..
+      dockerfile: .gebug/Dockerfile
+    volumes:
+      - ../:/src:ro
+`,
+			out.String())
+	}
 }
 
 func TestConfig_RenderDockerfile(t *testing.T) {
