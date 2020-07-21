@@ -1,13 +1,14 @@
 package cmd
 
 import (
-	"gebug/pkg/config"
-	"gebug/pkg/osutil"
-	"github.com/hashicorp/go-multierror"
-	"github.com/spf13/cobra"
-	"go.uber.org/zap"
 	"os"
 	"path"
+
+	"github.com/hashicorp/go-multierror"
+	"github.com/moshebe/gebug/pkg/config"
+	"github.com/moshebe/gebug/pkg/osutil"
+	"github.com/spf13/cobra"
+	"go.uber.org/zap"
 )
 
 func init() {

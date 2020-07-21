@@ -1,12 +1,13 @@
 package config
 
 import (
-	"gebug/pkg/render"
-	"github.com/pkg/errors"
-	"gopkg.in/yaml.v2"
 	"io"
 	"reflect"
 	"strings"
+
+	"github.com/moshebe/gebug/pkg/render"
+	"github.com/pkg/errors"
+	"gopkg.in/yaml.v2"
 )
 
 type Config struct {

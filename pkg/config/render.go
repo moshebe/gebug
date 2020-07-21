@@ -1,9 +1,10 @@
 package config
 
 import (
-	"gebug/pkg/render"
-	"github.com/pkg/errors"
 	"io"
+
+	"github.com/moshebe/gebug/pkg/render"
+	"github.com/pkg/errors"
 )
 
 func (c *Config) renderedWrite(template string, writer io.Writer) error {

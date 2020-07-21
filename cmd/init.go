@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"gebug/pkg/input"
+	"github.com/moshebe/gebug/pkg/input"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
