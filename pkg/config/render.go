@@ -33,8 +33,8 @@ services:
     volumes:
       - ../:/src:ro
 {{- if .ExposePorts}}
-    ports:{{ range $key, $value := .ExposePorts }}
-      - {{ $value }}{{end}}
+    ports:{{range $key, $value := .ExposePorts}}
+      - {{$value}}{{end}}
 {{- end}}
 {{if .DebuggerEnabled}}      - {{.DebuggerPort}}:{{.DebuggerPort}}{{end}}`, writer)
 }
