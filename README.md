@@ -14,8 +14,8 @@ go get -u github.com/moshebe/gebug
 # Usage
 ```console
 ➜ gebug --help
-Gebug helps you setup a fully suited debugging environment of Go application running inside container.
-It enables options like connecting with remote debugger and put breakpoints inside the code or 
+Gebug helps you setup a fully suited debugging environment of Go application running inside a container.
+It enables options like connecting with remote debugger and breakpoints inside the code or 
 use hot-reload features which auto-build and run upon new change detected on the source code.
 
 Usage:
