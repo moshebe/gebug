@@ -19,13 +19,14 @@ var initCmd = &cobra.Command{
 		currentConfig, _ := input.LoadOrDefault(workDir)
 
 		err := input.Setup(currentConfig, []input.ConfigPrompt{
-			&input.PromptName{Config: currentConfig},
-			&input.PromptOutputBinary{Config: currentConfig},
-			&input.PromptBuildCommand{Config: currentConfig},
-			&input.PromptRunCommand{Config: currentConfig},
-			&input.PromptRuntimeImage{Config: currentConfig},
-			&input.PromptDebuggerOptions{Config: currentConfig},
-			&input.PromptExposePort{Config: currentConfig},
+			//&input.PromptName{Config: currentConfig},
+			//&input.PromptOutputBinary{Config: currentConfig},
+			//&input.PromptBuildCommand{Config: currentConfig},
+			//&input.PromptRunCommand{Config: currentConfig},
+			//&input.PromptRuntimeImage{Config: currentConfig},
+			//&input.PromptDebuggerOptions{Config: currentConfig},
+			//&input.PromptExposePort{Config: currentConfig},
+			&input.PromptEnvironment{Config: currentConfig},
 		}, workDir)
 
 		if err != nil {
