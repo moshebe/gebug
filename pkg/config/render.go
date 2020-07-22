@@ -27,16 +27,37 @@ services:
   gebug-{{.Name}}:
     build:
       context: ..
-      dockerfile: .gebug/Dockerfile{{if .DebuggerEnabled}}
+      dockerfile: .gebug/Dockerfile
+{{- if .DebuggerEnabled}}
     cap_add:
-      - SYS_PTRACE{{end}}
+      - SYS_PTRACE
+{{- end}}
     volumes:
       - ../:/src:ro
 {{- if .ExposePorts}}
-    ports:{{range $key, $value := .ExposePorts}}
-      - {{$value}}{{end}}
+    ports:
+{{- range $key, $value := .ExposePorts}}
+      - {{$value}}
 {{- end}}
-{{if .DebuggerEnabled}}      - {{.DebuggerPort}}:{{.DebuggerPort}}{{end}}`, writer)
+{{- end}}
+{{- if .DebuggerEnabled}}
+      - {{.DebuggerPort}}:{{.DebuggerPort}}
+{{- end}}
+{{- if .Networks}}
+    networks:
+    {{- range $key, $value := .Networks}}
+      - {{$value}}
+    {{- end}}
+{{- end}}
+
+{{- if .Networks}}
+networks:
+{{- range $key, $value := .Networks}}
+  {{$value}}:
+    external: true
+{{- end}}
+{{- end}}
+`, writer)
 }
 
 func (c *Config) RenderDockerfile(writer io.Writer) error {
@@ -47,6 +68,10 @@ RUN go get github.com/go-delve/delve/cmd/dlv
 WORKDIR /src
 COPY . .
 
-{{if .DebuggerEnabled}}RUN {{.BuildCommand}}
-ENTRYPOINT dlv --listen=:{{.DebuggerPort}} --headless=true --api-version=2 --accept-multiclient exec {{.OutputBinaryPath}}{{else}}ENTRYPOINT CompileDaemon -log-prefix=false -build="{{.BuildCommand}}" -command="{{.RunCommand}}"{{end}}`, writer)
+{{if .DebuggerEnabled -}}
+RUN {{.BuildCommand}}
+ENTRYPOINT dlv --listen=:{{.DebuggerPort}} --headless=true --api-version=2 --accept-multiclient exec {{.OutputBinaryPath}}
+{{- else -}}
+ENTRYPOINT CompileDaemon -log-prefix=false -build="{{.BuildCommand}}" -command="{{.RunCommand}}"
+{{- end}}`, writer)
 }

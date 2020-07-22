@@ -2,13 +2,14 @@ package config
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/assert"
 	"io"
 	"io/ioutil"
 	"path"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestConfig_Load(t *testing.T) {
@@ -136,6 +137,8 @@ debugger_port: 40000
 expose_ports:
 - "8080"
 - 8081:8081
+environment: []
+networks: []
 `
 	c := Config{
 		Name:             "my-app",
