@@ -49,6 +49,12 @@ services:
       - {{$value}}
     {{- end}}
 {{- end}}
+{{- if .Environment}}
+    environment:
+    {{- range $key, $value := .Environment}}
+      - {{$value}}
+    {{- end}}
+{{- end}}
 
 {{- if .Networks}}
 networks:
