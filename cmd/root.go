@@ -34,6 +34,7 @@ use hot-reload features which auto-build and run upon new change detected on the
 	}
 )
 
+// Execute executes the root cobra command
 func Execute() error {
 	return rootCmd.Execute()
 }

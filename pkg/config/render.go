@@ -21,6 +21,7 @@ func (c *Config) renderedWrite(template string, writer io.Writer) error {
 	return nil
 }
 
+// RenderDockerComposeFile writes the docker-compose.yml configuration to writer
 func (c *Config) RenderDockerComposeFile(writer io.Writer) error {
 	return c.renderedWrite(`version: '3'
 services:
@@ -60,6 +61,7 @@ networks:
 `, writer)
 }
 
+// RenderDockerfile writes the Dockerfile to writer
 func (c *Config) RenderDockerfile(writer io.Writer) error {
 	return c.renderedWrite(`FROM {{.RuntimeImage}}
 RUN go get github.com/githubnemo/CompileDaemon

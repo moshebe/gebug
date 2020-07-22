@@ -12,7 +12,10 @@ import (
 	"go.uber.org/zap"
 )
 
+// ConfigPrompt asks for fields for the configuration
 type ConfigPrompt interface {
+
+	// Run asks for configuration field and saves it in configuration
 	Run() error
 }
 

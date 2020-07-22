@@ -1,20 +1,30 @@
 package config
 
 import (
-	"github.com/pkg/errors"
-	"go.uber.org/zap"
 	"io"
 	"os"
 	"path"
+
+	"github.com/pkg/errors"
+	"go.uber.org/zap"
 )
 
 const (
-	RootDir               = ".gebug"
-	Path                  = "config.yaml"
-	DockerfileName        = "Dockerfile"
+
+	// RootDir contains the name of the directory where gebug internals files and configurations are stored
+	RootDir = ".gebug"
+
+	// Path contains the name of gebug's configuration file
+	Path = "config.yaml"
+
+	// DockerfileName contains the name of the dockerfile that is used for building and running the project
+	DockerfileName = "Dockerfile"
+
+	// DockerComposeFileName contains the name of the docker-compose configuration that is used to configure the contianer
 	DockerComposeFileName = "docker-compose.yml"
 )
 
+// FilePath returns the path of a file inside gebug's directory
 func FilePath(workDir string, fileName string) string {
 	return path.Join(workDir, RootDir, fileName)
 }
@@ -41,6 +51,7 @@ func createConfigFile(fileName string, workDir string, renderFunc func(io.Writer
 	return nil
 }
 
+// Generate generates the required files to run the docker
 func (c *Config) Generate(workDir string) error {
 	for fileName, renderFunc := range map[string]func(io.Writer) error{
 		DockerComposeFileName: c.RenderDockerComposeFile,
