@@ -4,11 +4,15 @@ services:
     build:
       context: ..
       dockerfile: .gebug/Dockerfile
-    cap_add:
-      - SYS_PTRACE
     volumes:
       - ../:/src:ro
     ports:
-      - 8080:8080
-      - 8081:8081
-      - 40000:40000
+      - 8080
+    networks:
+      - frontend
+      - backend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true

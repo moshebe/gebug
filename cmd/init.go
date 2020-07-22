@@ -26,6 +26,7 @@ var initCmd = &cobra.Command{
 			&input.PromptRuntimeImage{Config: currentConfig},
 			&input.PromptDebuggerOptions{Config: currentConfig},
 			&input.PromptExposePort{Config: currentConfig},
+			&input.PromptNetworks{Config: currentConfig},
 		}, workDir)
 
 		if err != nil {
