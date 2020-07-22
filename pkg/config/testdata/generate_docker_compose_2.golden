@@ -1,0 +1,18 @@
+version: '3'
+services:
+  gebug-my-app:
+    build:
+      context: ..
+      dockerfile: .gebug/Dockerfile
+    volumes:
+      - ../:/src:ro
+    ports:
+      - 8080
+    networks:
+      - frontend
+      - backend
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
