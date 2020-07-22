@@ -137,7 +137,6 @@ debugger_port: 40000
 expose_ports:
 - "8080"
 - 8081:8081
-environment: []
 networks: []
 `
 	c := Config{
