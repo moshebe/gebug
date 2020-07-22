@@ -8,12 +8,12 @@ A tool that makes debugging of Dockerized Go applications super easy by enabling
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ---
 # Installing
-```console
+```
 go get -u github.com/moshebe/gebug
 ```
 
 # Usage
-```console
+```
 ➜ gebug --help
 Gebug helps you setup a fully suited debugging environment of Go application running inside a container.
 It enables options like connecting with remote debugger and breakpoints inside the code or 
