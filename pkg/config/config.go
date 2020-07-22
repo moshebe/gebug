@@ -20,6 +20,7 @@ type Config struct {
 	DebuggerPort     int      `yaml:"debugger_port"`
 	ExposePorts      []string `yaml:"expose_ports"`
 	Networks         []string `yaml:"networks"`
+	Environment      []string `yaml:"environment"`
 }
 
 func updateBuildCommand(buildCommand string, debuggerEnabled bool) string {

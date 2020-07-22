@@ -1,6 +1,8 @@
 package main
 
-import "github.com/moshebe/gebug/cmd"
+import (
+	"github.com/moshebe/gebug/cmd"
+)
 
 func main() {
 	err := cmd.Execute()

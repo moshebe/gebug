@@ -138,6 +138,7 @@ expose_ports:
 - "8080"
 - 8081:8081
 networks: []
+environment: []
 `
 	c := Config{
 		Name:             "my-app",
