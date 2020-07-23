@@ -1,0 +1,13 @@
+name: telegram
+on: [push, pull_request, create, fork, issue_comment, issues, pull_request_review, pull_request_review_comment]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: telegram notification
+    steps:
+      - uses: actions/checkout@master
+      - name: send telegram notification to Gebug tracking group
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
