@@ -1,21 +1,22 @@
 package input
 
 import (
-	"github.com/pkg/errors"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
-type Validator interface {
+type validator interface {
 	validate(string) error
 }
 
-type NonEmptyValidator struct {
+type nonEmptyValidator struct {
 	field *string
 }
 
-func (v NonEmptyValidator) validate(input string) error {
+func (v nonEmptyValidator) validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
 		return errors.New("empty command")
@@ -24,12 +25,12 @@ func (v NonEmptyValidator) validate(input string) error {
 	return nil
 }
 
-type RegexValidator struct {
+type regexValidator struct {
 	pattern string
 	field   *string
 }
 
-func (v RegexValidator) validate(input string) error {
+func (v regexValidator) validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
 		return errors.New("empty input")
@@ -42,13 +43,13 @@ func (v RegexValidator) validate(input string) error {
 	return nil
 }
 
-type NumericRangeValidator struct {
+type numericRangeValidator struct {
 	min   int
 	max   int
 	field *int
 }
 
-func (v NumericRangeValidator) validate(input string) error {
+func (v numericRangeValidator) validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
 		return errors.New("empty input")

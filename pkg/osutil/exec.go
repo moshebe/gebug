@@ -2,12 +2,16 @@ package osutil
 
 import (
 	"errors"
-	"go.uber.org/zap"
 	"os"
 	"os/exec"
 	"strings"
+
+	"go.uber.org/zap"
 )
 
+// RunCommand runs a command and prints the output to stdout and error to stderr.
+//
+// See https://golang.org/pkg/os/exec/#Cmd.Run for return values
 func RunCommand(command string) error {
 	if len(command) < 1 {
 		return errors.New("invalid command")
@@ -15,10 +19,10 @@ func RunCommand(command string) error {
 	parts := strings.Split(command, " ")
 
 	zap.S().Debugf("Run command: '%s'", command)
-	return Exec(parts[0], parts[1:]...)
+	return execCommand(parts[0], parts[1:]...)
 }
 
-func Exec(name string, args ...string) error {
+func execCommand(name string, args ...string) error {
 	exeCmd := exec.Command(name, args...)
 	exeCmd.Stdin = os.Stdin
 	exeCmd.Stdout = os.Stdout
@@ -26,11 +30,13 @@ func Exec(name string, args ...string) error {
 	return exeCmd.Run()
 }
 
+// CommandExists checks for an executable in the PATH env variable
 func CommandExists(command string) bool {
 	_, err := exec.LookPath(command)
 	return err == nil
 }
 
+// FileExists checks if filePath exists on the disk
 func FileExists(filePath string) bool {
 	_, err := os.Stat(filePath)
 	if err == nil {

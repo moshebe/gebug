@@ -10,11 +10,11 @@ type PromptName struct {
 	*config.Config
 }
 
-// Run asks the user for input and saves the result
+// Run asks the user for application name
 func (p *PromptName) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Application Name",
-		Validate: RegexValidator{`^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`, &p.Name}.validate,
+		Validate: regexValidator{`^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`, &p.Name}.validate,
 		Default:  p.Name,
 	}
 	_, err := prompt.Run()
