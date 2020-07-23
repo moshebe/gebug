@@ -1,5 +1,5 @@
 name: test
-on: [push, pull_request]
+on: push
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -15,5 +15,7 @@ jobs:
       - run: go test -cover ./...
         env:
           CGO_ENABLED: 0
-      - name: Codecov
-        uses: codecov/codecov-action@v1.0.12
+      - name: coverage
+        run: |
+          make coverage
+          bash <(curl -s https://codecov.io/bash)
