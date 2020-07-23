@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-type validator interface {
+type validatorIface interface {
 	validate(string) error
 }
 
