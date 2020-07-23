@@ -62,13 +62,25 @@ expose_ports:
 			},
 			wantErr: false,
 		},
+		{
+			input:   `invalid yaml`,
+			wantErr: true,
+		},
+		{
+			input:   `name: {{.NotExists}}`,
+			wantErr: true,
+		},
 	}
 
 	for _, test := range tests {
 		c, err := Load([]byte(test.input))
-		assert.NoError(t, err)
-		assert.NotNil(t, c)
-		assert.Equal(t, test.expected, c)
+		if test.wantErr {
+			assert.Error(t, err)
+		} else {
+			assert.NoError(t, err)
+			assert.NotNil(t, c)
+			assert.Equal(t, test.expected, c)
+		}
 	}
 }
 
@@ -127,7 +139,23 @@ func generateFile(t *testing.T, prefix string, generate func(*Config, io.Writer)
 }
 
 func TestConfig_Write(t *testing.T) {
-	expected := `name: my-app
+	tests := []struct {
+		input    *Config
+		expected string
+		wantErr  bool
+	}{
+		{
+			input: &Config{
+				Name:             "my-app",
+				OutputBinaryPath: "/app",
+				BuildCommand:     "go build -o /app -gcflags=\"all=-N-l\"",
+				RunCommand:       "/app",
+				RuntimeImage:     "golang:1.14",
+				DebuggerPort:     40000,
+				DebuggerEnabled:  true,
+				ExposePorts:      []string{"8080", "8081:8081"},
+			},
+			expected: `name: my-app
 output_binary: /app
 build_command: go build -o /app -gcflags="all=-N-l"
 run_command: /app
@@ -139,22 +167,23 @@ expose_ports:
 - 8081:8081
 networks: []
 environment: []
-`
-	c := Config{
-		Name:             "my-app",
-		OutputBinaryPath: "/app",
-		BuildCommand:     "go build -o /app -gcflags=\"all=-N-l\"",
-		RunCommand:       "/app",
-		RuntimeImage:     "golang:1.14",
-		DebuggerPort:     40000,
-		DebuggerEnabled:  true,
-		ExposePorts:      []string{"8080", "8081:8081"},
+`,
+			wantErr: false,
+		},
 	}
 
-	buf := bytes.NewBufferString("")
-	err := c.Write(buf)
-	assert.NoError(t, err)
-	assert.Equal(t, expected, buf.String())
+	for i, test := range tests {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			buf := bytes.NewBufferString("")
+			err := test.input.Write(buf)
+			if test.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+				assert.Equal(t, test.expected, buf.String())
+			}
+		})
+	}
 }
 
 func TestConfig_updateBuildCommand(t *testing.T) {
