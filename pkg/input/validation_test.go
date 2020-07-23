@@ -2,8 +2,9 @@ package input
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type testScenario struct {
@@ -11,7 +12,7 @@ type testScenario struct {
 	wantErr bool
 }
 
-func testValidator(t *testing.T, validator Validator, tests []testScenario) {
+func testValidator(t *testing.T, validator validatorIface, tests []testScenario) {
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%s#%d", t.Name(), i), func(t *testing.T) {
 			err := validator.validate(test.input)
@@ -26,7 +27,7 @@ func testValidator(t *testing.T, validator Validator, tests []testScenario) {
 
 func TestNonEmptyValidator(t *testing.T) {
 	var dummy string
-	testValidator(t, NonEmptyValidator{field: &dummy}, []testScenario{
+	testValidator(t, nonEmptyValidator{field: &dummy}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},
@@ -39,7 +40,7 @@ func TestNonEmptyValidator(t *testing.T) {
 
 func TestRegexValidator(t *testing.T) {
 	var dummy string
-	testValidator(t, RegexValidator{pattern: `^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`, field: &dummy}, []testScenario{
+	testValidator(t, regexValidator{pattern: `^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`, field: &dummy}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},
@@ -55,7 +56,7 @@ func TestRegexValidator(t *testing.T) {
 
 func TestNumericRangeValidator(t *testing.T) {
 	var dummy int
-	testValidator(t, NumericRangeValidator{min: 1, max: 10, field: &dummy}, []testScenario{
+	testValidator(t, numericRangeValidator{min: 1, max: 10, field: &dummy}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},

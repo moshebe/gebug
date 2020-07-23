@@ -10,6 +10,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Config contains the fields of gebug configuration
 type Config struct {
 	Name             string   `yaml:"name"`
 	OutputBinaryPath string   `yaml:"output_binary"`
@@ -34,6 +35,7 @@ func updateBuildCommand(buildCommand string, debuggerEnabled bool) string {
 	return strings.TrimSpace(goBuildPrefix + ` -gcflags="all=-N -l"` + commandArgs)
 }
 
+// Load loads a configuration to a Config struct
 func Load(input []byte) (*Config, error) {
 	c := &Config{}
 	err := yaml.Unmarshal(input, c)

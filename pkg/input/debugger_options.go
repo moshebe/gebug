@@ -7,10 +7,12 @@ import (
 	"github.com/moshebe/gebug/pkg/config"
 )
 
+// PromptDebuggerOptions handles the prompt that asks for debugger options
 type PromptDebuggerOptions struct {
 	*config.Config
 }
 
+// Run asks the user for debugger options
 func (p *PromptDebuggerOptions) Run() error {
 	selectPrompt := promptui.Select{
 		Label: "Select debugging method",
@@ -25,7 +27,7 @@ func (p *PromptDebuggerOptions) Run() error {
 	if p.DebuggerEnabled {
 		prompt := &promptui.Prompt{
 			Label: "Debugger Port",
-			Validate: NumericRangeValidator{
+			Validate: numericRangeValidator{
 				min:   1024,
 				max:   65535,
 				field: &p.DebuggerPort,

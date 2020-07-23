@@ -5,14 +5,16 @@ import (
 	"github.com/moshebe/gebug/pkg/config"
 )
 
+// PromptRuntimeImage handles the prompt that asks for runtime image
 type PromptRuntimeImage struct {
 	*config.Config
 }
 
+// Run asks the user for the runtime image
 func (p *PromptRuntimeImage) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Runtime Docker Image",
-		Validate: NonEmptyValidator{field: &p.RuntimeImage}.validate,
+		Validate: nonEmptyValidator{field: &p.RuntimeImage}.validate,
 		Default:  p.RuntimeImage,
 	}
 	_, err := prompt.Run()

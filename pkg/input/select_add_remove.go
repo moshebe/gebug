@@ -1,8 +1,9 @@
 package input
 
 import (
-	"github.com/manifoldco/promptui"
 	"strings"
+
+	"github.com/manifoldco/promptui"
 )
 
 const (
@@ -10,6 +11,7 @@ const (
 	defaultRemovePrefix = `✖️ `
 )
 
+// SelectWithAddAndRemove provides a ui prompt for a list that supports both adding to and removing from a list
 type SelectWithAddAndRemove struct {
 	prompt       *promptui.SelectWithAdd
 	field        *[]string
@@ -17,6 +19,7 @@ type SelectWithAddAndRemove struct {
 	removePrefix string
 }
 
+// NewSelectWithAddAndRemove constructs SelectWithAddAndRemove
 func NewSelectWithAddAndRemove(field *[]string, prompt *promptui.SelectWithAdd) *SelectWithAddAndRemove {
 	return &SelectWithAddAndRemove{
 		prompt:       prompt,
@@ -56,6 +59,7 @@ func (s *SelectWithAddAndRemove) cleanResults(items []string) []string {
 	return items
 }
 
+// Run runs the prompt
 func (s *SelectWithAddAndRemove) Run() error {
 	items := append(*s.field, s.doneItem)
 	s.appendRemovePrefix(items)

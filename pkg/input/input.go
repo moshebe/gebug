@@ -12,10 +12,14 @@ import (
 	"go.uber.org/zap"
 )
 
+// ConfigPrompt asks for fields for the configuration
 type ConfigPrompt interface {
+
+	// Run asks for configuration field and saves it in configuration
 	Run() error
 }
 
+// LoadOrDefault loads gebug's configuration file from the disk. Loads a default configuration in case of failure
 func LoadOrDefault(workDir string) (*config.Config, bool) {
 	fallback := &config.Config{
 		OutputBinaryPath: "/app",
@@ -65,6 +69,7 @@ func save(workDir string, currentConfig *config.Config) error {
 	return nil
 }
 
+// Setup runs a list of prompts and saves the user's input as config
 func Setup(currentConfig *config.Config, prompts []ConfigPrompt, workDir string) error {
 	for _, p := range prompts {
 		err := p.Run()
