@@ -4,6 +4,7 @@ A tool that makes debugging of Dockerized Go applications super easy by enabling
 
 ![](https://github.com/moshebe/gebug/workflows/lint/badge.svg)
 ![](https://github.com/moshebe/gebug/workflows/test/badge.svg)
+![](https://github.com/moshebe/gebug/workflows/telegram/badge.svg)
 ![](https://goreportcard.com/badge/github.com/moshebe/gebug)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ---
