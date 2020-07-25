@@ -14,12 +14,15 @@ type PromptRuntimeImage struct {
 func (p *PromptRuntimeImage) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Runtime Docker Image",
-		Validate: nonEmptyValidator{field: &p.RuntimeImage}.validate,
+		Validate: nonEmptyValidator{}.validate,
 		Default:  p.RuntimeImage,
 	}
-	_, err := prompt.Run()
+
+	var err error
+	p.RuntimeImage, err = prompt.Run()
 	if err != nil {
 		return err
 	}
+
 	return nil
 }

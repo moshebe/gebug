@@ -14,11 +14,12 @@ type PromptOutputBinary struct {
 func (p *PromptOutputBinary) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Output Binary Path (inside the container, referenced by: {{.output_binary}})",
-		Validate: nonEmptyValidator{field: &p.OutputBinaryPath}.validate,
+		Validate: nonEmptyValidator{}.validate,
 		Default:  p.OutputBinaryPath,
 	}
 
-	_, err := prompt.Run()
+	var err error
+	p.OutputBinaryPath, err = prompt.Run()
 	if err != nil {
 		return err
 	}

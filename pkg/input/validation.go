@@ -1,10 +1,10 @@
 package input
 
 import (
-	"regexp"
 	"strconv"
 	"strings"
 
+	valid "github.com/asaskevich/govalidator"
 	"github.com/pkg/errors"
 )
 
@@ -12,22 +12,19 @@ type validatorIface interface {
 	validate(string) error
 }
 
-type nonEmptyValidator struct {
-	field *string
-}
+type nonEmptyValidator struct{}
 
 func (v nonEmptyValidator) validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
 		return errors.New("empty command")
 	}
-	*v.field = input
+
 	return nil
 }
 
 type regexValidator struct {
 	pattern string
-	field   *string
 }
 
 func (v regexValidator) validate(input string) error {
@@ -35,18 +32,17 @@ func (v regexValidator) validate(input string) error {
 	if len(input) <= 0 {
 		return errors.New("empty input")
 	}
-	pattern := regexp.MustCompile(v.pattern)
-	if !pattern.MatchString(input) {
-		return errors.New("invalid value")
+
+	if !valid.Matches(input, v.pattern) {
+		return errors.New("input does not matches pattern")
 	}
-	*v.field = input
+
 	return nil
 }
 
 type numericRangeValidator struct {
-	min   int
-	max   int
-	field *int
+	min int
+	max int
 }
 
 func (v numericRangeValidator) validate(input string) error {
@@ -54,14 +50,15 @@ func (v numericRangeValidator) validate(input string) error {
 	if len(input) <= 0 {
 		return errors.New("empty input")
 	}
-	port, err := strconv.Atoi(input)
+
+	num, err := strconv.Atoi(input)
 	if err != nil {
-		return errors.New("invalid port")
-	}
-	if port < v.min || port > v.max {
-		return errors.New("port not in valid range")
+		return errors.New("convert input to a number")
 	}
 
-	*v.field = port
+	if !valid.InRange(num, v.min, v.max) {
+		return errors.Errorf("input is not in range (%d|%d)", v.min, v.max)
+	}
+
 	return nil
 }
