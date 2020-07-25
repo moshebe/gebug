@@ -4,6 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: telegram notification
+    if: github.repository_owner == 'moshebe'
     steps:
       - uses: actions/checkout@master
       - name: send telegram notification to Gebug tracking group

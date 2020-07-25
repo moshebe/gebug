@@ -16,6 +16,7 @@ jobs:
         env:
           CGO_ENABLED: 0
       - name: coverage
+        if: github.repository_owner == 'moshebe'
         run: |
           make coverage
           bash <(curl -s https://codecov.io/bash)
