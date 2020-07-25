@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${fileDirname}",
+            "env": {},
+            "args": []
+        },
+        {
+            "name": "Gebug",
+            "type": "go",
+            "request": "attach",
+            "mode": "remote",
+            "remotePath": "/src",
+            "port": 40000,
+            "host": "127.0.0.1"
+        }
+    ]
+}

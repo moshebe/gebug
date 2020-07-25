@@ -2,11 +2,9 @@ package config
 
 import (
 	"bytes"
+	"github.com/moshebe/gebug/pkg/testutil"
 	"io"
-	"io/ioutil"
-	"path"
 	"strconv"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -84,58 +82,32 @@ expose_ports:
 	}
 }
 
-func TestGenerateFiles(t *testing.T) {
-	tests := []struct {
-		prefix   string
-		generate func(*Config, io.Writer) error
-	}{
-		{
-			prefix: "generate_docker_compose",
-			generate: func(config *Config, writer io.Writer) error {
-				return config.RenderDockerComposeFile(writer)
-			},
-		},
-		{
-			prefix: "generate_dockerfile",
-			generate: func(config *Config, writer io.Writer) error {
-				return config.RenderDockerfile(writer)
-			},
-		},
-	}
-	for _, test := range tests {
-		generateFile(t, test.prefix, test.generate)
-	}
+func testGenerateHelper(t *testing.T, input, golden *bytes.Buffer, generate func(config *Config, writer io.Writer) error) {
+	assertion := assert.New(t)
+	c, err := Load(input.Bytes())
+	assertion.NoError(err)
+	assertion.NotNil(c)
+
+	got := bytes.NewBufferString("")
+	err = generate(c, got)
+	assertion.NoError(err)
+	assertion.Equal(golden.String(), got.String())
 }
 
-func generateFile(t *testing.T, prefix string, generate func(*Config, io.Writer) error) {
-	baseDir := "./testdata"
-	files, err := ioutil.ReadDir(baseDir)
-	assert.NoError(t, err)
-
-	for _, file := range files {
-		name := file.Name()
-		if !strings.HasPrefix(name, prefix+"_") || !strings.HasSuffix(name, ".in") {
-			continue
-		}
-
-		t.Run(name, func(t *testing.T) {
-			assertion := assert.New(t)
-			filePath := path.Join(baseDir, name)
-			input, err := ioutil.ReadFile(filePath)
-			assertion.NoError(err)
-			golden, err := ioutil.ReadFile(strings.TrimSuffix(filePath, ".in") + ".golden")
-			assertion.NoError(err)
-
-			c, err := Load(input)
-			assertion.NoError(err)
-			assertion.NotNil(c)
-
-			out := bytes.NewBufferString("")
-			err = generate(c, out)
-			assertion.NoError(err)
-			assertion.Equal(string(golden), out.String())
+func TestConfig_GenerateDockerfile(t *testing.T) {
+	testutil.RunTestData(t, "generate_dockerfile", func(t *testing.T, input, golden *bytes.Buffer) {
+		testGenerateHelper(t, input, golden, func(c *Config, writer io.Writer) error {
+			return c.RenderDockerfile(writer)
 		})
-	}
+	})
+}
+
+func TestConfig_GenerateDockerCompose(t *testing.T) {
+	testutil.RunTestData(t, "generate_docker_compose", func(t *testing.T, input, golden *bytes.Buffer) {
+		testGenerateHelper(t, input, golden, func(c *Config, writer io.Writer) error {
+			return c.RenderDockerComposeFile(writer)
+		})
+	})
 }
 
 func TestConfig_Write(t *testing.T) {
