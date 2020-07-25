@@ -6,6 +6,8 @@ import (
 	"path"
 )
 
+var AppFs = afero.NewOsFs()
+
 type Ide interface {
 	// Detected tells if the IDE trails were found in the working directory. e.g: `.vscode` or `.idea` directories.
 	Detected() (bool, error)
@@ -21,7 +23,8 @@ type Ide interface {
 }
 
 type baseIde struct {
-	workDir string
+	workDir      string
+	debuggerPort int
 }
 
 func (i baseIde) detected(ideDirName string) (bool, error) {
