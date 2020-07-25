@@ -26,8 +26,7 @@ func testValidator(t *testing.T, validator validatorIface, tests []testScenario)
 }
 
 func TestNonEmptyValidator(t *testing.T) {
-	var dummy string
-	testValidator(t, nonEmptyValidator{field: &dummy}, []testScenario{
+	testValidator(t, nonEmptyValidator{}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},
@@ -39,8 +38,7 @@ func TestNonEmptyValidator(t *testing.T) {
 }
 
 func TestRegexValidator(t *testing.T) {
-	var dummy string
-	testValidator(t, regexValidator{pattern: `^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`, field: &dummy}, []testScenario{
+	testValidator(t, regexValidator{pattern: `^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},
@@ -55,8 +53,7 @@ func TestRegexValidator(t *testing.T) {
 }
 
 func TestNumericRangeValidator(t *testing.T) {
-	var dummy int
-	testValidator(t, numericRangeValidator{min: 1, max: 10, field: &dummy}, []testScenario{
+	testValidator(t, numericRangeValidator{min: 1, max: 10}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},
