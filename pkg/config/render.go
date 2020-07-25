@@ -35,7 +35,7 @@ services:
 {{- end}}
     volumes:
       - ../:/src:ro
-{{- if .ExposePorts}}
+{{- if or .ExposePorts .DebuggerEnabled}}
     ports:
 {{- range $key, $value := .ExposePorts}}
       - {{$value}}
