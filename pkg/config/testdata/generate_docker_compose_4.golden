@@ -1,0 +1,12 @@
+version: '3'
+services:
+  gebug-my-app:
+    build:
+      context: ..
+      dockerfile: .gebug/Dockerfile
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - ../:/src:ro
+    ports:
+      - 40000:40000
