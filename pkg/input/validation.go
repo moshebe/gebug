@@ -53,7 +53,7 @@ func (v numericRangeValidator) validate(input string) error {
 
 	num, err := strconv.Atoi(input)
 	if err != nil {
-		return errors.New("cannot convert input to a number")
+		return errors.New("convert input to a number")
 	}
 
 	if !valid.InRange(num, v.min, v.max) {
