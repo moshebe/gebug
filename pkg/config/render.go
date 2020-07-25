@@ -10,7 +10,7 @@ import (
 func (c *Config) renderedWrite(template string, writer io.Writer) error {
 	out, err := render.Render(template, c)
 	if err != nil {
-		return errors.WithMessage(err, "render docker-compose template")
+		return errors.WithMessage(err, "render template")
 	}
 
 	_, err = writer.Write([]byte(out))
