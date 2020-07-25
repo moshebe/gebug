@@ -1,6 +1,7 @@
 package input
 
 import (
+	"strconv"
 	"strings"
 
 	valid "github.com/asaskevich/govalidator"
@@ -50,7 +51,12 @@ func (v numericRangeValidator) validate(input string) error {
 		return errors.New("empty input")
 	}
 
-	if !valid.InRange(input, v.min, v.max) {
+	num, err := strconv.Atoi(input)
+	if err != nil {
+		return errors.New("cannot convert input to a number")
+	}
+
+	if !valid.InRange(num, v.min, v.max) {
 		return errors.Errorf("input is not in range (%d|%d)", v.min, v.max)
 	}
 

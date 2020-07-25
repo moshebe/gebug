@@ -2,9 +2,15 @@ package input
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/manifoldco/promptui"
 	"github.com/moshebe/gebug/pkg/config"
+)
+
+const (
+	hotReload = "Hot Reload"
+	debugger  = "Debugger"
 )
 
 // PromptDebuggerOptions handles the prompt that asks for debugger options
@@ -16,28 +22,36 @@ type PromptDebuggerOptions struct {
 func (p *PromptDebuggerOptions) Run() error {
 	selectPrompt := promptui.Select{
 		Label: "Select debugging method",
-		Items: []string{"Hot Reload", "Debugger"},
+		Items: []string{hotReload, debugger},
 	}
-	index, _, err := selectPrompt.Run()
+	_, value, err := selectPrompt.Run()
 	if err != nil {
 		return err
 	}
 
-	p.DebuggerEnabled = index == 1
-	if p.DebuggerEnabled {
-		prompt := &promptui.Prompt{
-			Label: "Debugger Port",
-			Validate: numericRangeValidator{
-				min:   1024,
-				max:   65535,
-				field: &p.DebuggerPort,
-			}.validate,
-			Default: fmt.Sprintf("%d", p.DebuggerPort),
-		}
-		_, err := prompt.Run()
-		if err != nil {
-			return err
-		}
+	p.DebuggerEnabled = (value == debugger)
+	if !p.DebuggerEnabled {
+		return nil
 	}
+
+	prompt := &promptui.Prompt{
+		Label: "Debugger Port",
+		Validate: numericRangeValidator{
+			min: 1024,
+			max: 65535,
+		}.validate,
+		Default: fmt.Sprintf("%d", p.DebuggerPort),
+	}
+
+	value, err = prompt.Run()
+	if err != nil {
+		return err
+	}
+
+	p.DebuggerPort, err = strconv.Atoi(value)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

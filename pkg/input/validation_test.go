@@ -64,5 +64,6 @@ func TestNumericRangeValidator(t *testing.T) {
 		{input: "11", wantErr: true},
 		{input: "1", wantErr: false},
 		{input: "5", wantErr: false},
+		{input: "10", wantErr: false},
 	})
 }

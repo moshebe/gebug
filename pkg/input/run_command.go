@@ -14,10 +14,12 @@ type PromptRunCommand struct {
 func (p *PromptRunCommand) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Run Command",
-		Validate: nonEmptyValidator{field: &p.RunCommand}.validate,
+		Validate: nonEmptyValidator{}.validate,
 		Default:  p.RunCommand,
 	}
-	_, err := prompt.Run()
+
+	var err error
+	p.RunCommand, err = prompt.Run()
 	if err != nil {
 		return err
 	}
