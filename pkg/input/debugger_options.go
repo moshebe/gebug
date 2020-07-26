@@ -96,11 +96,7 @@ func (p *PromptDebuggerOptions) Run() error {
 		return err
 	}
 
-	supportedIde := map[string]setup.Ide{
-		"Visual Studio Code": setup.NewVsCode(p.workDir, p.DebuggerPort),
-	}
-
-	for name, ide := range supportedIde {
+	for name, ide := range setup.SupportedIde(p.workDir, p.DebuggerPort) {
 		err := p.handleIde(name, ide)
 		if err != nil {
 			zap.L().Error("Failed to handle IDE checks", zap.String("name", name), zap.String("workDir", p.workDir))

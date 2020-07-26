@@ -35,3 +35,9 @@ func (i baseIde) detected(ideDirName string) (bool, error) {
 
 	return detected, nil
 }
+
+func SupportedIde(workDir string, port int) map[string]Ide {
+	return map[string]Ide{
+		"Visual Studio Code": NewVsCode(workDir, port),
+	}
+}

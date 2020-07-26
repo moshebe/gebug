@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"github.com/moshebe/gebug/pkg/setup"
+	"github.com/pkg/errors"
 	"os"
 	"path"
 
@@ -33,7 +35,23 @@ var destroyCmd = &cobra.Command{
 			}
 		}
 
-		// TODO: remove from IDE configuration
+		zap.L().Debug("Disable Gebug configurations from detected IDEs")
+		for name, ide := range setup.SupportedIde(workDir, 0) {
+			detected, err := ide.Detected()
+			if err != nil {
+				resultErr = multierror.Append(resultErr, errors.WithMessagef(err, "detect IDE existence of '%s'", name))
+				continue
+			}
+
+			if !detected {
+				continue
+			}
+
+			err = ide.Disable()
+			if err != nil {
+				resultErr = multierror.Append(resultErr, errors.WithMessagef(err, "disable IDE '%s'", name))
+			}
+		}
 
 		if resultErr != nil {
 			zap.L().Fatal("Failed to destroy project", zap.Error(resultErr))
