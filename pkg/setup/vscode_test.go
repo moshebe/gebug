@@ -13,62 +13,6 @@ import (
 
 var mockVsCode = &VsCode{baseIde{workDir: ".", debuggerPort: 43210,}}
 
-// TODO: remove
-//func TestVscodeStuff(t *testing.T) {
-//	assertion := assert.New(t)
-//
-//	input, err := ioutil.ReadFile("testdata/vscode_test_file.in")
-//	assertion.NoError(err)
-//	t.Log(string(input))
-//	// TODO: maybe use Setup function to clear FS
-//	AppFs = afero.NewMemMapFs()
-//
-//	//err = AppFs.Mkdir(".vscode", 0777)
-//	//assertion.NoError(err)
-//
-//	//	content := `{
-//	//    "version": "0.2.0",
-//	//    "configurations": [
-//	//        {
-//	//            "name": "Launch",
-//	//            "type": "go",
-//	//            "request": "launch",
-//	//            "mode": "auto",
-//	//            "program": "${fileDirname}",
-//	//            "env": {},
-//	//            "args": []
-//	//        }
-//	//    ]
-//	//}`
-//
-//	//err = afero.WriteFile(AppFs, path.Join(".vscode", "launch.json"),
-//	//	[]byte(content), 0777)
-//	//assertion.NoError(err)
-//	//var msg json.RawMessage
-//
-//	var launchConfig = struct {
-//		Version        string
-//		Configurations []interface{}
-//	}{}
-//
-//	//re := regexp.MustCompile("(?s)//.*?\n|/\\*.*?\\*/")
-//	//noCommentsInput := re.ReplaceAll(in, nil)
-//	//
-//	err = json.Unmarshal(input, &launchConfig)
-//	assertion.NoError(err)
-//	launchConfig.Configurations = append(launchConfig.Configurations, mockVsCode.createGebugConfig())
-//
-//
-//	output, err := mockVsCode.editLaunchConfig(true, input)
-//	assertion.NoError(err)
-//
-//	t.Log(string(output))
-//	//if err != nil {
-//	//	return false, errors.WithMessage(err, "unmarshal no comments input")
-//	//}
-//
-//}
-
 func TestVsCode_Detected(t *testing.T) {
 	tests := []struct {
 		create   bool

@@ -46,10 +46,6 @@ func (v VsCode) GebugInstalled() (bool, error) {
 	return installed, nil
 }
 
-// TODO: tests -
-// if no file - create one and put gebug inside
-// has file, gebug not found - add it
-// has file, has gebug - don't change anything
 func (v VsCode) Enable() error {
 	return v.setEnabled(true)
 }
