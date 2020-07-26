@@ -82,7 +82,57 @@ func TestVsCode_installedInLaunchConfig(t *testing.T) {
 			assertion.Equal(test.expected, got)
 		})
 	}
+}
 
+func TestVsCode_GebugInstalled(t *testing.T) {
+	tests := []struct {
+		name     string
+		expected bool
+		wantErr  bool
+	}{
+		{
+			name:     "vscode_install_in_launch_config_0_not_exists",
+			expected: false,
+			wantErr:  false,
+		},
+		{
+			name:     "vscode_install_in_launch_config_1_exists",
+			expected: true,
+			wantErr:  false,
+		},
+		{
+			name:     "vscode_install_in_launch_config_2_exists_both",
+			expected: true,
+			wantErr:  false,
+		},
+		{
+			name:     "vscode_install_in_launch_config_3_empty",
+			expected: false,
+			wantErr:  true,
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			testutil.FsTest(t, &AppFs, func(t *testing.T) {
+				assertion := assert.New(t)
+				filePath := path.Join("testdata", test.name+".in")
+				input, err := ioutil.ReadFile(filePath)
+				assertion.NoError(err)
+
+				err = AppFs.Mkdir(vscodeDirName, 0777)
+				assertion.NoError(err)
+				err = afero.WriteFile(AppFs, mockVsCode.launchConfigFilePath(), input, 0777)
+				assertion.NoError(err)
+				got, err := mockVsCode.GebugInstalled()
+				if test.wantErr {
+					assertion.Error(err)
+				} else {
+					assertion.NoError(err)
+				}
+				assertion.Equal(test.expected, got)
+			})
+		})
+	}
 }
 
 func testEnableHelper(t *testing.T, input, golden *bytes.Buffer, f func() error) {
