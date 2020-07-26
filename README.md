@@ -52,8 +52,6 @@ Use "gebug [command] --help" for more information about a command.
 
 
 
-
-
 # How Does It Work
 
 Nothing special, no voodoo. Gebug just handles the Dockerfile and docker-compose configuration files generation with a easy-to-use command line utility.    
