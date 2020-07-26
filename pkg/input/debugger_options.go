@@ -2,6 +2,9 @@ package input
 
 import (
 	"fmt"
+	"github.com/moshebe/gebug/pkg/setup"
+	"github.com/moshebe/gebug/pkg/validate"
+	"go.uber.org/zap"
 	"strconv"
 
 	"github.com/manifoldco/promptui"
@@ -16,6 +19,31 @@ const (
 // PromptDebuggerOptions handles the prompt that asks for debugger options
 type PromptDebuggerOptions struct {
 	*config.Config
+	workDir string
+}
+
+func (p *PromptDebuggerOptions) autoSetupIde() error {
+	supportedIde := map[string]setup.Ide{
+		"Visual Studio Code": setup.NewVsCode(p.workDir, p.DebuggerPort),
+	}
+
+	for name, ide := range supportedIde {
+		detected, err := ide.Detected()
+		if err != nil {
+			zap.L().Error("Failed to detect IDE in working directory", zap.String("workDir", p.workDir),
+				zap.String("IDE", name), zap.Error(err))
+			continue
+		}
+
+		if !detected {
+			continue
+		}
+
+		// TODO: PROMPT CONFIRMATION OF ENABLE IDE DEBUGGER OPTIONS
+
+	}
+
+	return nil
 }
 
 // Run asks the user for debugger options
@@ -29,17 +57,17 @@ func (p *PromptDebuggerOptions) Run() error {
 		return err
 	}
 
-	p.DebuggerEnabled = (value == debugger)
+	p.DebuggerEnabled = value == debugger
 	if !p.DebuggerEnabled {
 		return nil
 	}
 
 	prompt := &promptui.Prompt{
 		Label: "Debugger Port",
-		Validate: numericRangeValidator{
-			min: 1024,
-			max: 65535,
-		}.validate,
+		Validate: validate.NumericRangeValidator{
+			Min: 1024,
+			Max: 65535,
+		}.Validate,
 		Default: fmt.Sprintf("%d", p.DebuggerPort),
 	}
 
@@ -52,6 +80,8 @@ func (p *PromptDebuggerOptions) Run() error {
 	if err != nil {
 		return err
 	}
+
+	// TODO: check for IDE
 
 	return nil
 }

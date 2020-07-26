@@ -3,6 +3,7 @@ package input
 import (
 	"github.com/manifoldco/promptui"
 	"github.com/moshebe/gebug/pkg/config"
+	"github.com/moshebe/gebug/pkg/validate"
 )
 
 // PromptOutputBinary handles the prompt that asks for output binary
@@ -14,7 +15,7 @@ type PromptOutputBinary struct {
 func (p *PromptOutputBinary) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Output Binary Path (inside the container, referenced by: {{.output_binary}})",
-		Validate: nonEmptyValidator{}.validate,
+		Validate: validate.NonEmptyValidator{}.Validate,
 		Default:  p.OutputBinaryPath,
 	}
 
