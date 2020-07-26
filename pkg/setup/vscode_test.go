@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-var mockVsCode = &VsCode{baseIde{workDir: ".", debuggerPort: 43210,}}
+var mockVsCode = NewVsCode(".", 43210)
 
 func TestVsCode_Detected(t *testing.T) {
 	tests := []struct {
