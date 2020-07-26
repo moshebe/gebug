@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/spf13/afero"
 	"io"
 	"reflect"
 	"strings"
@@ -9,6 +10,8 @@ import (
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 )
+
+var AppFs = afero.NewOsFs()
 
 // Config contains the fields of gebug configuration
 type Config struct {

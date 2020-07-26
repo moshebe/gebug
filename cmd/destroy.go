@@ -33,6 +33,8 @@ var destroyCmd = &cobra.Command{
 			}
 		}
 
+		// TODO: remove from IDE configuration
+
 		if resultErr != nil {
 			zap.L().Fatal("Failed to destroy project", zap.Error(resultErr))
 		}

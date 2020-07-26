@@ -2,7 +2,6 @@ package config
 
 import (
 	"io"
-	"os"
 	"path"
 
 	"github.com/pkg/errors"
@@ -10,7 +9,6 @@ import (
 )
 
 const (
-
 	// RootDir contains the name of the directory where gebug internals files and configurations are stored
 	RootDir = ".gebug"
 
@@ -32,7 +30,7 @@ func FilePath(workDir string, fileName string) string {
 func createConfigFile(fileName string, workDir string, renderFunc func(io.Writer) error) error {
 	filePath := FilePath(workDir, fileName)
 	zap.L().Debug("Generating config file", zap.String("path", filePath))
-	file, err := os.Create(filePath)
+	file, err := AppFs.Create(filePath)
 	if err != nil {
 		return errors.WithMessagef(err, "create file '%s'", fileName)
 	}
