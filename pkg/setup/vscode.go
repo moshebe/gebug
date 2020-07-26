@@ -20,12 +20,6 @@ type VsCode struct {
 	baseIde
 }
 
-func NewVsCode(workDir string, port int) *VsCode {
-	return &VsCode{baseIde{
-		workDir:      workDir,
-		debuggerPort: port,
-	}}
-}
 func (v VsCode) Detected() (bool, error) {
 	return v.detected(vscodeDirName)
 }
@@ -38,7 +32,7 @@ func (v VsCode) GebugInstalled() (bool, error) {
 	if !detected {
 		return false, errors.New("vscode was not detected in this workspace")
 	}
-	launchConfigPath := path.Join(v.workDir, vscodeDirName, vscodeLaunchFileName)
+	launchConfigPath := path.Join(v.WorkDir, vscodeDirName, vscodeLaunchFileName)
 	launchContent, err := afero.ReadFile(AppFs, launchConfigPath)
 	if err != nil {
 		return false, errors.WithMessage(err, "read vscode launch.json file")
@@ -93,7 +87,7 @@ func (v VsCode) createGebugConfig() map[string]interface{} {
 		"mode":       "remote",
 		"remotePath": "/src",
 		"host":       "127.0.0.1",
-		"port":       v.debuggerPort,
+		"port":       v.DebuggerPort,
 	}
 }
 
@@ -138,7 +132,7 @@ func (v VsCode) editLaunchConfig(enabled bool, input []byte) ([]byte, error) {
 }
 
 func (v VsCode) launchConfigFilePath() string {
-	return path.Join(v.workDir, vscodeDirName, vscodeLaunchFileName)
+	return path.Join(v.WorkDir, vscodeDirName, vscodeLaunchFileName)
 }
 
 func (v VsCode) setEnabled(enabled bool) error {

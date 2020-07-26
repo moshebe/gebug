@@ -23,12 +23,12 @@ type Ide interface {
 }
 
 type baseIde struct {
-	workDir      string
-	debuggerPort int
+	WorkDir      string
+	DebuggerPort int
 }
 
 func (i baseIde) detected(ideDirName string) (bool, error) {
-	detected, err := afero.DirExists(AppFs, path.Join(i.workDir, ideDirName))
+	detected, err := afero.DirExists(AppFs, path.Join(i.WorkDir, ideDirName))
 	if err != nil {
 		return false, errors.WithMessage(err, "check if directory exists")
 	}
@@ -38,6 +38,6 @@ func (i baseIde) detected(ideDirName string) (bool, error) {
 
 func SupportedIdes(workDir string, port int) map[string]Ide {
 	return map[string]Ide{
-		"Visual Studio Code": NewVsCode(workDir, port),
+		"Visual Studio Code": &VsCode{baseIde{WorkDir: workDir, DebuggerPort: port,}},
 	}
 }
