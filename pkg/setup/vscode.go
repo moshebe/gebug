@@ -11,9 +11,10 @@ import (
 )
 
 const (
-	vscodeDirName        = ".vscode"
-	vscodeLaunchFileName = "launch.json"
-	gebugLaunchName      = "Gebug"
+	vscodeDirName            = ".vscode"
+	vscodeLaunchFileName     = "launch.json"
+	gebugLaunchName          = "Gebug"
+	defaultVsCodeConfVersion = "0.2.0"
 )
 
 type VsCode struct {
@@ -95,20 +96,20 @@ func (v VsCode) createGebugConfig() map[string]interface{} {
 	}
 }
 
-func (v VsCode) editConfig(enabled bool, input []byte) ([]byte, error) {
+func (v VsCode) editLaunchConfig(enabled bool, input []byte) ([]byte, error) {
 	var launchConfig = struct {
-		Version        string
-		Configurations []interface{}
+		Version        string        `json:"version"`
+		Configurations []interface{} `json:"configurations"`
 	}{}
-	err := json.Unmarshal(input, &launchConfig)
-	if err != nil {
-		return nil, errors.WithMessage(err, "unmarshal launch.json")
-	}
+	// first, we remove the Gebug configuration if exists and then we add the new one if enabled
+	newConfig := make([]interface{}, 0)
 
-	var newConfig []interface{}
-	if enabled {
-		newConfig = append(launchConfig.Configurations, v.createGebugConfig())
-	} else {
+	if len(input) > 0 {
+		err := json.Unmarshal(v.removeComments(input), &launchConfig)
+		if err != nil {
+			return nil, errors.WithMessage(err, "unmarshal launch.json")
+		}
+
 		for _, c := range launchConfig.Configurations {
 			item, ok := c.(map[string]interface{})
 			if !ok {
@@ -119,9 +120,14 @@ func (v VsCode) editConfig(enabled bool, input []byte) ([]byte, error) {
 			}
 			newConfig = append(newConfig, c)
 		}
+	} else {
+		launchConfig.Version = defaultVsCodeConfVersion
+	}
+
+	if enabled {
+		newConfig = append(newConfig, v.createGebugConfig())
 	}
 	launchConfig.Configurations = newConfig
-
 	output, err := json.MarshalIndent(launchConfig, "", "\t")
 	if err != nil {
 		return nil, errors.WithMessage(err, "marshal new configuration")
@@ -157,7 +163,7 @@ func (v VsCode) setEnabled(enabled bool) error {
 		return errors.WithMessage(err, "read launch.json file")
 	}
 
-	output, err := v.editConfig(true, input)
+	output, err := v.editLaunchConfig(enabled, input)
 	if err != nil {
 		return errors.WithMessage(err, "edit configuration to set enabled mode")
 	}

@@ -17,7 +17,7 @@ func RunTestData(t *testing.T, prefix string, check func(t *testing.T, input, go
 
 	for _, file := range files {
 		name := file.Name()
-		if !strings.HasPrefix(name, prefix+"_") || !strings.HasSuffix(name, ".in") {
+		if (prefix+".in" != name && !strings.HasPrefix(name, prefix+"_")) || !strings.HasSuffix(name, ".in") {
 			continue
 		}
 
