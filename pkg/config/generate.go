@@ -18,7 +18,7 @@ const (
 	// DockerfileName contains the name of the dockerfile that is used for building and running the project
 	DockerfileName = "Dockerfile"
 
-	// DockerComposeFileName contains the name of the docker-compose configuration that is used to configure the contianer
+	// DockerComposeFileName contains the name of the docker-compose configuration that is used to configure the container
 	DockerComposeFileName = "docker-compose.yml"
 )
 

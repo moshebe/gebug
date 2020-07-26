@@ -74,7 +74,7 @@ func (v VsCode) installedInLaunchConfig(in []byte) (bool, error) {
 	return false, nil
 }
 
-func (v VsCode) removeComments(in [] byte) []byte {
+func (v VsCode) removeComments(in []byte) []byte {
 	re := regexp.MustCompile("(?s)//.*?\n|/\\*.*?\\*/")
 	return re.ReplaceAll(in, nil)
 }
@@ -143,12 +143,13 @@ func (v VsCode) setEnabled(enabled bool) error {
 	if err != nil {
 		if !os.IsNotExist(err) {
 			return errors.WithMessage(err, "access launch.json config file")
-		} else {
-			// no file is ok in case of disable
-			if !enabled {
-				return nil
-			}
 		}
+
+		// no file is ok in case of disable
+		if !enabled {
+			return nil
+		}
+
 	} else {
 		perm = file.Mode()
 	}
