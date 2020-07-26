@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/moshebe/gebug/pkg/setup"
 	"github.com/moshebe/gebug/pkg/validate"
+	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"strconv"
 
@@ -22,25 +23,39 @@ type PromptDebuggerOptions struct {
 	workDir string
 }
 
-func (p *PromptDebuggerOptions) autoSetupIde() error {
-	supportedIde := map[string]setup.Ide{
-		"Visual Studio Code": setup.NewVsCode(p.workDir, p.DebuggerPort),
+func (p *PromptDebuggerOptions) handleIde(name string, ide setup.Ide) error {
+	detected, err := ide.Detected()
+	if err != nil {
+		return errors.WithMessage(err, "detect IDE in working directory")
 	}
 
-	for name, ide := range supportedIde {
-		detected, err := ide.Detected()
+	if !detected {
+		return nil
+	}
+
+	installed, err := ide.GebugInstalled()
+	if err != nil {
+		return errors.WithMessage(err, "check if Gebug is configured in IDE")
+	}
+
+	if installed {
+		fmt.Printf("✔  Gebug is already configured in %s debugger\n", name)
+		return nil
+	}
+
+	confirmPrompt := promptui.Prompt{
+		Label:     fmt.Sprintf("IDE detected! would you like to configure Gebug in '%s'?", name),
+		IsConfirm: true,
+	}
+
+	_, err = confirmPrompt.Run()
+	if err == nil {
+		zap.L().Debug("Configuring IDE", zap.String("name", name), zap.String("workDir", p.workDir))
+		err = ide.Enable()
 		if err != nil {
-			zap.L().Error("Failed to detect IDE in working directory", zap.String("workDir", p.workDir),
-				zap.String("IDE", name), zap.Error(err))
-			continue
+			return errors.WithMessage(err, "enable Gebug debugger configurations")
 		}
-
-		if !detected {
-			continue
-		}
-
-		// TODO: PROMPT CONFIRMATION OF ENABLE IDE DEBUGGER OPTIONS
-
+		fmt.Printf("✔  Gebug configured in %s debugger successfully!\n", name)
 	}
 
 	return nil
@@ -81,7 +96,17 @@ func (p *PromptDebuggerOptions) Run() error {
 		return err
 	}
 
-	// TODO: check for IDE
+	supportedIde := map[string]setup.Ide{
+		"Visual Studio Code": setup.NewVsCode(p.workDir, p.DebuggerPort),
+	}
+
+	for name, ide := range supportedIde {
+		err := p.handleIde(name, ide)
+		if err != nil {
+			zap.L().Error("Failed to handle IDE checks", zap.String("name", name), zap.String("workDir", p.workDir))
+		}
+
+	}
 
 	return nil
 }
