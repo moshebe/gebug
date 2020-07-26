@@ -1,7 +1,7 @@
 name: telegram
 on: [push, create, fork, issue_comment, issues, pull_request_review, pull_request_review_comment]
 jobs:
-  build:
+  notification:
     runs-on: ubuntu-latest
     name: telegram notification
     if: github.repository_owner == 'moshebe'

@@ -3,6 +3,7 @@ package input
 import (
 	"github.com/manifoldco/promptui"
 	"github.com/moshebe/gebug/pkg/config"
+	"github.com/moshebe/gebug/pkg/validate"
 )
 
 // PromptBuildCommand handles the prompt that asks for build command
@@ -14,7 +15,7 @@ type PromptBuildCommand struct {
 func (p *PromptBuildCommand) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Build Command",
-		Validate: nonEmptyValidator{}.validate,
+		Validate: validate.NonEmptyValidator{}.Validate,
 		Default:  p.BuildCommand,
 	}
 

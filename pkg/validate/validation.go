@@ -1,4 +1,4 @@
-package input
+package validate
 
 import (
 	"strconv"
@@ -8,13 +8,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-type validatorIface interface {
-	validate(string) error
+type Validator interface {
+	Validate(string) error
 }
 
-type nonEmptyValidator struct{}
+type NonEmptyValidator struct{}
 
-func (v nonEmptyValidator) validate(input string) error {
+func (v NonEmptyValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
 		return errors.New("empty command")
@@ -23,29 +23,29 @@ func (v nonEmptyValidator) validate(input string) error {
 	return nil
 }
 
-type regexValidator struct {
-	pattern string
+type RegexValidator struct {
+	Pattern string
 }
 
-func (v regexValidator) validate(input string) error {
+func (v RegexValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
 		return errors.New("empty input")
 	}
 
-	if !valid.Matches(input, v.pattern) {
+	if !valid.Matches(input, v.Pattern) {
 		return errors.New("input does not matches pattern")
 	}
 
 	return nil
 }
 
-type numericRangeValidator struct {
-	min int
-	max int
+type NumericRangeValidator struct {
+	Min int
+	Max int
 }
 
-func (v numericRangeValidator) validate(input string) error {
+func (v NumericRangeValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
 		return errors.New("empty input")
@@ -56,8 +56,8 @@ func (v numericRangeValidator) validate(input string) error {
 		return errors.New("convert input to a number")
 	}
 
-	if !valid.InRange(num, v.min, v.max) {
-		return errors.Errorf("input is not in range (%d|%d)", v.min, v.max)
+	if !valid.InRange(num, v.Min, v.Max) {
+		return errors.Errorf("input is not in range (%d|%d)", v.Min, v.Max)
 	}
 
 	return nil

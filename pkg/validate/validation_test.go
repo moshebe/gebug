@@ -1,4 +1,4 @@
-package input
+package validate
 
 import (
 	"fmt"
@@ -12,10 +12,10 @@ type testScenario struct {
 	wantErr bool
 }
 
-func testValidator(t *testing.T, validator validatorIface, tests []testScenario) {
+func testValidator(t *testing.T, validator Validator, tests []testScenario) {
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%s#%d", t.Name(), i), func(t *testing.T) {
-			err := validator.validate(test.input)
+			err := validator.Validate(test.input)
 			if test.wantErr {
 				assert.Error(t, err)
 			} else {
@@ -26,7 +26,7 @@ func testValidator(t *testing.T, validator validatorIface, tests []testScenario)
 }
 
 func TestNonEmptyValidator(t *testing.T) {
-	testValidator(t, nonEmptyValidator{}, []testScenario{
+	testValidator(t, NonEmptyValidator{}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},
@@ -38,7 +38,7 @@ func TestNonEmptyValidator(t *testing.T) {
 }
 
 func TestRegexValidator(t *testing.T) {
-	testValidator(t, regexValidator{pattern: `^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`}, []testScenario{
+	testValidator(t, RegexValidator{Pattern: `^[A-Za-z0-9]([A-Za-z0-9_-]*[A-Za-z0-9])?$`}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},
@@ -53,7 +53,7 @@ func TestRegexValidator(t *testing.T) {
 }
 
 func TestNumericRangeValidator(t *testing.T) {
-	testValidator(t, numericRangeValidator{min: 1, max: 10}, []testScenario{
+	testValidator(t, NumericRangeValidator{Min: 1, Max: 10}, []testScenario{
 		{input: "", wantErr: true},
 		{input: "  ", wantErr: true},
 		{input: " \t", wantErr: true},

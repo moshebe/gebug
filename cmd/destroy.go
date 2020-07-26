@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"github.com/moshebe/gebug/pkg/setup"
+	"github.com/pkg/errors"
 	"os"
 	"path"
 
@@ -30,6 +32,24 @@ var destroyCmd = &cobra.Command{
 		if osutil.FileExists(configDirPath) {
 			if err := os.RemoveAll(configDirPath); err != nil {
 				resultErr = multierror.Append(resultErr, err)
+			}
+		}
+
+		zap.L().Debug("Disable Gebug configurations from detected IDEs")
+		for name, ide := range setup.SupportedIdes(workDir, 0) {
+			detected, err := ide.Detected()
+			if err != nil {
+				resultErr = multierror.Append(resultErr, errors.WithMessagef(err, "detect IDE existence of '%s'", name))
+				continue
+			}
+
+			if !detected {
+				continue
+			}
+
+			err = ide.Disable()
+			if err != nil {
+				resultErr = multierror.Append(resultErr, errors.WithMessagef(err, "disable IDE '%s'", name))
 			}
 		}
 

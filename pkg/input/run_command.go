@@ -3,6 +3,7 @@ package input
 import (
 	"github.com/manifoldco/promptui"
 	"github.com/moshebe/gebug/pkg/config"
+	"github.com/moshebe/gebug/pkg/validate"
 )
 
 // PromptRunCommand handles the prompt that asks for run command
@@ -14,7 +15,7 @@ type PromptRunCommand struct {
 func (p *PromptRunCommand) Run() error {
 	prompt := &promptui.Prompt{
 		Label:    "Run Command",
-		Validate: nonEmptyValidator{}.validate,
+		Validate: validate.NonEmptyValidator{}.Validate,
 		Default:  p.RunCommand,
 	}
 
