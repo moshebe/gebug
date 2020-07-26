@@ -2,7 +2,6 @@ package testutil
 
 import (
 	"bytes"
-	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"path"
@@ -31,9 +30,4 @@ func RunTestData(t *testing.T, prefix string, check func(t *testing.T, input, go
 			check(t, bytes.NewBuffer(input), bytes.NewBuffer(golden))
 		})
 	}
-}
-
-func FsTest(t *testing.T, fs *afero.Fs, test func(t *testing.T)) {
-	*fs = afero.NewMemMapFs()
-	test(t)
 }

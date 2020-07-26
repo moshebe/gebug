@@ -43,7 +43,7 @@ func (p *PromptDebuggerOptions) handleIde(name string, ide setup.Ide) error {
 		return nil
 	}
 
-	confirmPrompt := promptui.Prompt{
+	confirmPrompt := &promptui.Prompt{
 		Label:     fmt.Sprintf("IDE detected! would you like to configure Gebug in '%s'?", name),
 		IsConfirm: true,
 	}

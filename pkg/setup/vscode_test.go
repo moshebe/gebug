@@ -24,16 +24,15 @@ func TestVsCode_Detected(t *testing.T) {
 	{
 		for i, test := range tests {
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
-				testutil.FsTest(t, &AppFs, func(t *testing.T) {
-					assertion := assert.New(t)
-					if test.create {
-						err := AppFs.Mkdir(vscodeDirName, 0777)
-						assertion.NoError(err)
-					}
-					got, err := mockVsCode.Detected()
+				AppFs = afero.NewMemMapFs()
+				assertion := assert.New(t)
+				if test.create {
+					err := AppFs.Mkdir(vscodeDirName, 0777)
 					assertion.NoError(err)
-					assertion.Equal(test.expected, got)
-				})
+				}
+				got, err := mockVsCode.Detected()
+				assertion.NoError(err)
+				assertion.Equal(test.expected, got)
 			})
 		}
 	}
@@ -113,24 +112,23 @@ func TestVsCode_GebugInstalled(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			testutil.FsTest(t, &AppFs, func(t *testing.T) {
-				assertion := assert.New(t)
-				filePath := path.Join("testdata", test.name+".in")
-				input, err := ioutil.ReadFile(filePath)
-				assertion.NoError(err)
+			AppFs = afero.NewMemMapFs()
+			assertion := assert.New(t)
+			filePath := path.Join("testdata", test.name+".in")
+			input, err := ioutil.ReadFile(filePath)
+			assertion.NoError(err)
 
-				err = AppFs.Mkdir(vscodeDirName, 0777)
+			err = AppFs.Mkdir(vscodeDirName, 0777)
+			assertion.NoError(err)
+			err = afero.WriteFile(AppFs, mockVsCode.launchConfigFilePath(), input, 0777)
+			assertion.NoError(err)
+			got, err := mockVsCode.GebugInstalled()
+			if test.wantErr {
+				assertion.Error(err)
+			} else {
 				assertion.NoError(err)
-				err = afero.WriteFile(AppFs, mockVsCode.launchConfigFilePath(), input, 0777)
-				assertion.NoError(err)
-				got, err := mockVsCode.GebugInstalled()
-				if test.wantErr {
-					assertion.Error(err)
-				} else {
-					assertion.NoError(err)
-				}
-				assertion.Equal(test.expected, got)
-			})
+			}
+			assertion.Equal(test.expected, got)
 		})
 	}
 }
@@ -152,16 +150,14 @@ func testEnableHelper(t *testing.T, input, golden *bytes.Buffer, f func() error)
 
 func TestVsCode_Enable(t *testing.T) {
 	testutil.RunTestData(t, "vscode_enable", func(t *testing.T, input, golden *bytes.Buffer) {
-		testutil.FsTest(t, &AppFs, func(t *testing.T) {
-			testEnableHelper(t, input, golden, mockVsCode.Enable)
-		})
+		AppFs = afero.NewMemMapFs()
+		testEnableHelper(t, input, golden, mockVsCode.Enable)
 	})
 }
 
 func TestVsCode_Disable(t *testing.T) {
 	testutil.RunTestData(t, "vscode_disable", func(t *testing.T, input, golden *bytes.Buffer) {
-		testutil.FsTest(t, &AppFs, func(t *testing.T) {
-			testEnableHelper(t, input, golden, mockVsCode.Disable)
-		})
+		AppFs = afero.NewMemMapFs()
+		testEnableHelper(t, input, golden, mockVsCode.Disable)
 	})
 }
