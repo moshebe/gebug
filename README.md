@@ -47,7 +47,15 @@ Use "gebug [command] --help" for more information about a command.
 #### Goland Debugger
 ![](assets/demo-goland-debugger.gif)
 
+#### Visual Studio Code Debugger
+![](assets/demo-vscode-debugger.gif)
+
+
+
+
+
 # How Does It Work
+
 Nothing special, no voodoo. Gebug just handles the Dockerfile and docker-compose configuration files generation with a easy-to-use command line utility.    
 You can find the generated files in your project under `.gebug` directory.  
 We are all programmers and I know you like to play with your toys, so feel free to edit any of those files in order to fit your use-case. 
