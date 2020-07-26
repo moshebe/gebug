@@ -38,6 +38,6 @@ func (i baseIde) detected(ideDirName string) (bool, error) {
 
 func SupportedIdes(workDir string, port int) map[string]Ide {
 	return map[string]Ide{
-		"Visual Studio Code": &VsCode{baseIde{WorkDir: workDir, DebuggerPort: port,}},
+		"Visual Studio Code": &VsCode{baseIde{WorkDir: workDir, DebuggerPort: port}},
 	}
 }
