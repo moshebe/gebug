@@ -36,7 +36,7 @@ var destroyCmd = &cobra.Command{
 		}
 
 		zap.L().Debug("Disable Gebug configurations from detected IDEs")
-		for name, ide := range setup.SupportedIde(workDir, 0) {
+		for name, ide := range setup.SupportedIdes(workDir, 0) {
 			detected, err := ide.Detected()
 			if err != nil {
 				resultErr = multierror.Append(resultErr, errors.WithMessagef(err, "detect IDE existence of '%s'", name))
