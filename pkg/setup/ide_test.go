@@ -20,3 +20,7 @@ func TestIde_detected(t *testing.T) {
 	_, err = afero.ReadDir(AppFs, ".not-exists")
 	assertion.Error(err)
 }
+
+func TestIde_SupportedIdes(t *testing.T) {
+	assert.NotEmpty(t, SupportedIdes(".", 0))
+}
