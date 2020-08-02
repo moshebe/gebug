@@ -8,12 +8,15 @@ import (
 	"github.com/pkg/errors"
 )
 
+// Validator defines the behaviour validation behaviour
 type Validator interface {
 	Validate(string) error
 }
 
+// NonEmptyValidator checks that the input is not empty after trimming
 type NonEmptyValidator struct{}
 
+// Validate checks the input and return an error if its invalid
 func (v NonEmptyValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
@@ -23,10 +26,12 @@ func (v NonEmptyValidator) Validate(input string) error {
 	return nil
 }
 
+// RegexValidator checks that the input matches a pattern after trimming
 type RegexValidator struct {
 	Pattern string
 }
 
+// Validate checks the input and return an error if its invalid
 func (v RegexValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
@@ -40,11 +45,13 @@ func (v RegexValidator) Validate(input string) error {
 	return nil
 }
 
+// NumericRangeValidator checks that the input is a valid number after trimming and its value is between a given range
 type NumericRangeValidator struct {
 	Min int
 	Max int
 }
 
+// Validate checks the input and return an error if its invalid
 func (v NumericRangeValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
