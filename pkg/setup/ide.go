@@ -6,8 +6,10 @@ import (
 	"path"
 )
 
+// AppFs hold the file-system abstraction for this package
 var AppFs = afero.NewOsFs()
 
+// Ide defines the expected behaviour of each IDE that will have a Gebug integration
 type Ide interface {
 	// Detected tells if the IDE trails were found in the working directory. e.g: `.vscode` or `.idea` directories.
 	Detected() (bool, error)
@@ -36,6 +38,7 @@ func (i baseIde) detected(ideDirName string) (bool, error) {
 	return detected, nil
 }
 
+// SupportedIdes returns a dictionary holds the IDE name along with the corresponding instance
 func SupportedIdes(workDir string, port int) map[string]Ide {
 	return map[string]Ide{
 		"Visual Studio Code": &VsCode{baseIde{WorkDir: workDir, DebuggerPort: port}},

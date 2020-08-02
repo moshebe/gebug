@@ -9,6 +9,8 @@ import (
 	"testing"
 )
 
+// RunTestData runs all the tests resides in the `testdata` directory and their input/golden file has the following prefix
+// using the `check` function the caller can easily consume the test file input and compare the actual result with the golden one.
 func RunTestData(t *testing.T, prefix string, check func(t *testing.T, input, golden *bytes.Buffer)) {
 	baseDir := "./testdata"
 	files, err := ioutil.ReadDir(baseDir)

@@ -1,6 +1,7 @@
 package input
 
 import (
+	"github.com/spf13/afero"
 	"io/ioutil"
 	"os"
 	"path"
@@ -12,9 +13,11 @@ import (
 	"go.uber.org/zap"
 )
 
+// AppFs hold the file-system abstraction for this package
+var AppFs = afero.NewOsFs()
+
 // ConfigPrompt asks for fields for the configuration
 type ConfigPrompt interface {
-
 	// Run asks for configuration field and saves it in configuration
 	Run() error
 }

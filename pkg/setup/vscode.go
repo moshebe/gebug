@@ -16,14 +16,17 @@ const (
 	defaultVsCodeConfVersion = "0.2.0"
 )
 
+// VsCode is the 'Visual Studio Code' integration with Gebug
 type VsCode struct {
 	baseIde
 }
 
+// Detected tells if the IDE trails were found in the working directory (the `.vscode` directory exists)
 func (v VsCode) Detected() (bool, error) {
 	return v.detected(vscodeDirName)
 }
 
+// GebugInstalled tells if Gebug debugger mode was set in the IDE 'launch.json' file
 func (v VsCode) GebugInstalled() (bool, error) {
 	detected, err := v.Detected()
 	if err != nil {
@@ -45,10 +48,12 @@ func (v VsCode) GebugInstalled() (bool, error) {
 	return installed, nil
 }
 
+// Enable Gebug's debugger configurations by adding the Gebug object from the configurations json in 'launch.json'
 func (v VsCode) Enable() error {
 	return v.setEnabled(true)
 }
 
+// Disable Gebug's debugger configurations by removing the Gebug object from the configurations json in 'launch.json'
 func (v VsCode) Disable() error {
 	return v.setEnabled(false)
 }

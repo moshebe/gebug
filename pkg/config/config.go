@@ -11,6 +11,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// AppFs hold the file-system abstraction for this package
 var AppFs = afero.NewOsFs()
 
 // Config contains the fields of gebug configuration
