@@ -1,3 +1,7 @@
+/*
+Package config handles the Gebug configurations.
+It represents the configuration found under `./gebug/config.yaml`
+ */
 package config
 
 import (
@@ -56,6 +60,7 @@ func Load(input []byte) (*Config, error) {
 	return c, nil
 }
 
+// Write the data marshaled into a given output
 func (c Config) Write(writer io.Writer) error {
 	out, err := yaml.Marshal(c)
 	if err != nil {

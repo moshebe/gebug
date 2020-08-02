@@ -1,3 +1,6 @@
+/*
+Package input handles the prompts interactive input from the user into the corresponding config fields.
+ */
 package input
 
 import (

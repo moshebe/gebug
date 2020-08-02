@@ -1,3 +1,6 @@
+/*
+Package osutil contains utilities that abstracts and simplify OS functions
+ */
 package osutil
 
 import (

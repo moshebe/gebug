@@ -1,3 +1,6 @@
+/*
+Package testutil contains inner tests utilities
+ */
 package testutil
 
 import (

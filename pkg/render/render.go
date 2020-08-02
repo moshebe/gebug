@@ -1,3 +1,6 @@
+/*
+Package render supply utilities to render a template string with a contextual data
+ */
 package render
 
 import (

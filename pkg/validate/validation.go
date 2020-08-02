@@ -1,3 +1,6 @@
+/*
+Package validate supplies input validation utilities
+ */
 package validate
 
 import (

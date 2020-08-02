@@ -1,3 +1,6 @@
+/*
+Package setup manages all the external plugins/integration with other tools and environments.
+ */
 package setup
 
 import (
@@ -9,7 +12,7 @@ import (
 // AppFs hold the file-system abstraction for this package
 var AppFs = afero.NewOsFs()
 
-// Ide defines the expected behaviour of each IDE that will have a Gebug integration
+// XXX Ide defines the expected behaviour of each IDE that will have a Gebug integration
 type Ide interface {
 	// Detected tells if the IDE trails were found in the working directory. e.g: `.vscode` or `.idea` directories.
 	Detected() (bool, error)
