@@ -198,3 +198,19 @@ func TestConfig_updateBuildCommand(t *testing.T) {
 		})
 	}
 }
+
+func TestConfig_ResolvePath(t *testing.T) {
+	expected := "/Users/me/Dev/project/.gebug/config.yaml"
+	variations := []string{
+		"/Users/me/Dev/project/.gebug/config.yaml",
+		"/Users/me/Dev/project/.gebug/",
+		"/Users/me/Dev/project/.gebug",
+		"/Users/me/Dev/project/",
+		"/Users/me/Dev/project",
+	}
+
+	for _, input := range variations {
+		got := ResolvePath(input)
+		assert.Equal(t, got, expected)
+	}
+}

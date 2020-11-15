@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/spf13/afero"
 	"io"
+	"path"
 	"reflect"
 	"strings"
 
@@ -16,16 +17,16 @@ var AppFs = afero.NewOsFs()
 
 // Config contains the fields of gebug configuration
 type Config struct {
-	Name             string   `yaml:"name"`
-	OutputBinaryPath string   `yaml:"output_binary"`
-	BuildCommand     string   `yaml:"build_command"`
-	RunCommand       string   `yaml:"run_command"`
-	RuntimeImage     string   `yaml:"runtime_image"`
-	DebuggerEnabled  bool     `yaml:"debugger_enabled"`
-	DebuggerPort     int      `yaml:"debugger_port"`
-	ExposePorts      []string `yaml:"expose_ports"`
-	Networks         []string `yaml:"networks"`
-	Environment      []string `yaml:"environment"`
+	Name             string   `yaml:"name" json:"name"`
+	OutputBinaryPath string   `yaml:"output_binary" json:"output_binary"`
+	BuildCommand     string   `yaml:"build_command" json:"build_command"`
+	RunCommand       string   `yaml:"run_command" json:"run_command"`
+	RuntimeImage     string   `yaml:"runtime_image" json:"runtime_image"`
+	DebuggerEnabled  bool     `yaml:"debugger_enabled" json:"debugger_enabled"`
+	DebuggerPort     int      `yaml:"debugger_port" json:"debugger_port"`
+	ExposePorts      []string `yaml:"expose_ports" json:"expose_ports"`
+	Networks         []string `yaml:"networks" json:"networks"`
+	Environment      []string `yaml:"environment" json:"environment"`
 }
 
 func updateBuildCommand(buildCommand string, debuggerEnabled bool) string {
@@ -54,6 +55,18 @@ func Load(input []byte) (*Config, error) {
 
 	c.BuildCommand = updateBuildCommand(c.BuildCommand, c.DebuggerEnabled)
 	return c, nil
+}
+
+func ResolvePath(projectPath string) string {
+	if strings.HasSuffix(projectPath, Path) {
+		return projectPath
+	}
+
+	if strings.HasSuffix(projectPath, RootDir) || strings.HasSuffix(projectPath, RootDir+"/") {
+		return path.Join(projectPath, Path)
+	}
+
+	return FilePath(projectPath, Path)
 }
 
 func (c Config) Write(writer io.Writer) error {

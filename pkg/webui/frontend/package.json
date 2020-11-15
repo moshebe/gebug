@@ -1,0 +1,60 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@braid/vue-formulate": "^2.4.5",
+    "@vue/composition-api": "^1.0.0-beta.16",
+    "@vuelidate/core": "^2.0.0-alpha.4",
+    "@vuelidate/validators": "^2.0.0-alpha.2",
+    "axios": "^0.20.0",
+    "bootstrap-vue": "^2.17.3",
+    "core-js": "^3.6.5",
+    "vee-validate": "^3.4.1",
+    "vue": "^2.6.11",
+    "vue-material": "^1.0.0-beta-15",
+    "vuelidate": "^0.7.5",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.11.5",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "bootstrap": "^4.5.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "mutationobserver-shim": "^0.3.7",
+    "popper.js": "^1.16.1",
+    "portal-vue": "^2.1.7",
+    "sass": "^1.26.11",
+    "sass-loader": "^10.0.2",
+    "vue-cli-plugin-bootstrap-vue": "~0.7.0",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
