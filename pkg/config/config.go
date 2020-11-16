@@ -18,13 +18,13 @@ var AppFs = afero.NewOsFs()
 // Config contains the fields of gebug configuration
 type Config struct {
 	Name             string   `yaml:"name" json:"name"`
-	OutputBinaryPath string   `yaml:"output_binary" json:"output_binary"`
-	BuildCommand     string   `yaml:"build_command" json:"build_command"`
-	RunCommand       string   `yaml:"run_command" json:"run_command"`
-	RuntimeImage     string   `yaml:"runtime_image" json:"runtime_image"`
-	DebuggerEnabled  bool     `yaml:"debugger_enabled" json:"debugger_enabled"`
-	DebuggerPort     int      `yaml:"debugger_port" json:"debugger_port"`
-	ExposePorts      []string `yaml:"expose_ports" json:"expose_ports"`
+	OutputBinaryPath string   `yaml:"output_binary" json:"outputBinary"`
+	BuildCommand     string   `yaml:"build_command" json:"buildCommand"`
+	RunCommand       string   `yaml:"run_command" json:"runCommand"`
+	RuntimeImage     string   `yaml:"runtime_image" json:"runtimeImage"`
+	DebuggerEnabled  bool     `yaml:"debugger_enabled" json:"debuggerEnabled"`
+	DebuggerPort     int      `yaml:"debugger_port" json:"debuggerPort"`
+	ExposePorts      []string `yaml:"expose_ports" json:"exposePorts"`
 	Networks         []string `yaml:"networks" json:"networks"`
 	Environment      []string `yaml:"environment" json:"environment"`
 }
