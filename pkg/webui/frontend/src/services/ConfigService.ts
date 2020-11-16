@@ -13,7 +13,7 @@ export type ConfigNetwork = {
 }
 export type Config = {
   name: string
-  outputBinPath: string
+  outputBinary: string
   buildCommand: string
   runCommand: string
   runtimeImage: string
@@ -27,14 +27,14 @@ export type Config = {
 export default class ConfigService {
     
   private static url(relative: string): string {
-      const baseUrl = "http://localhost:3030" // TODO: settings
+      const baseUrl = "http://localhost:3030" // TODO: use settings
       return `${baseUrl}/${relative}`;
     }
 
-    static decodeModel(config: any) : Config {
+    static decode(config: any) : Config {
       return {
         name: config.name,
-        outputBinPath: config.outputBinPath,
+        outputBinary: config.outputBinary,
         buildCommand:  config.buildCommand,
         runCommand:  config.runCommand,
         runtimeImage: config.runtimeImage,
@@ -52,10 +52,10 @@ export default class ConfigService {
       };
     }
 
-    static encodeModel(config: Config): any{
+    static encode(config: Config): any{
       return {
         name: config.name,
-        outputBinPath: config.outputBinPath,
+        outputBinary: config.outputBinary,
         buildCommand:  config.buildCommand,
         runCommand:  config.runCommand,
         runtimeImage: config.runtimeImage,
@@ -69,20 +69,16 @@ export default class ConfigService {
 
     static async get(path: string) {
       const url = this.url(`config?path=${path}`); // TODO: input sanitization
-      const x =  await axios.get(url);      
-      // console.log('x: ', x);
-      // console.log('x1: ', x.data);
-      console.log('x2: ', x.data.data.config);
-      return x;
-      // .then(
-          // response => {                      
-            // this.config = response.data.data.config;
-            // console.log('got response from sever, set config to: ', this.config);
-        // }
+      const res =  await axios.get(url);
+      return this.decode(res.data.data.config);
     }
 
-    static async save(config: Config) {
-      const url = 'https://enlpbbatnnqf.x.pipedream.net'; // TODO: replace with the backend endpoint
-      await axios.post(url, config);
+    static async save(location: string, config: Config) {
+      const url = this.url('config');
+      const payload = {
+        location: location, 
+        config: this.encode(config),
+    };
+      return axios.post(url, payload);
     }
 }

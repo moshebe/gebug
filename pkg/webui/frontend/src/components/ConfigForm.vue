@@ -25,6 +25,15 @@
       />
       <FormulateInput
         type="text"
+        label="Output Binary Path"
+        validation="required"
+        validation-name="Output Binary"
+        error-behavior="live"
+        :placeholder="placeholders.outputBinary"
+        v-model="config.outputBinary"
+      />
+      <FormulateInput
+        type="text"
         label="Run Command"
         validation="required"
         validation-name="Run Command"
@@ -116,9 +125,7 @@
         @click="reset"
       />
       </div>
-      
-      
-      
+            
     </FormulateForm>
   </div>
 </template>
@@ -127,12 +134,15 @@
 import ConfigService from '../services/ConfigService';
 
 export default {
+  props: {
+    location: String,
+  },
    data () {
     return {
       config: {},
       placeholders: {
         name: "awesome-app",
-        outputBinPath: "",
+        outputBinary: "/app",
         buildCommand: "go build -o {{.output_binary}}",
         runCommand: "{{.output_binary}}",
         runtimeImage: "golang:latest",
@@ -145,26 +155,24 @@ export default {
       },
     }
   },
-  mounted() {
-    console.log("mounted");
-    ConfigService.get('/Users/moshe/Dev/cpp-gebug').then(
-      response => {          
-        this.config = ConfigService.decodeModel(response.data.data.config);
-        console.log('got response from sever, set config to: ', this.config, response.data.data.config);
-        }
-      );
+   async mounted() {
+    const remoteConfig = await ConfigService.get(this.location);    
+    this.config = remoteConfig;
   },
 
   methods: {
     reset () {
-      console.log('reset called');    
-      console.log(JSON.stringify(this.config));
       this.$formulate.reset('config')
     },
     handleSubmit(data) {
-      console.log("config: ", JSON.stringify(this.config));
-      console.log('handle submit called: ', data);     
-      ConfigService.save(ConfigService.encodeModel(data));
+      console.log('handle submit called: ', data);
+      console.log('config: ', data)
+      console.log('encoded: ', ConfigService.encode(data));
+      ConfigService.save(this.location, data);
+      // const res = 
+      // if (res.status != 200) {
+      //   throw new Error(`unable to save due to: ${res.statusText}`);
+      // }
     }
   },
 };

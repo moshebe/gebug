@@ -6,6 +6,7 @@ import (
 )
 
 func TestServer_Start(t *testing.T) {
+	t.Log("Starting...")
 	s := &Server{
 		Port: 3030,
 	}

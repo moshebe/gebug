@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <center>
-    <ConfigForm/>
+    <ConfigForm :location="'/Users/moshe/Dev/cpp-gebug'"/>
     </center>
   </div>
 </template>

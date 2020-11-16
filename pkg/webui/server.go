@@ -89,6 +89,7 @@ func (s *Server) Start() error {
 	//r.Use(static.Serve("/fonts", static.LocalFile("fonts", false)))
 
 	r.GET("/config", handlers.HandleGetConfig)
+	r.POST("/config", handlers.HandleCreateConfig)
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
