@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <img alt="Gebug" src="./assets/logo.png" width="400" height="300">
     <center>
     <ConfigForm :location="'/Users/moshe/Dev/cpp-gebug'"/>
     </center>
