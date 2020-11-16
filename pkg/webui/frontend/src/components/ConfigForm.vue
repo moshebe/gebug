@@ -129,7 +129,7 @@ import ConfigService from '../services/ConfigService';
 export default {
    data () {
     return {
-      config: ConfigService.defaultModel(),
+      config: {},
       placeholders: {
         name: "awesome-app",
         outputBinPath: "",

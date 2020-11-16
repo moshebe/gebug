@@ -31,31 +31,6 @@ export default class ConfigService {
       return `${baseUrl}/${relative}`;
     }
 
-  static defaultModel(): Config {
-    return { 
-      name: "",
-      outputBinPath: "",
-      buildCommand: "",
-      runCommand: "",
-      runtimeImage: "",
-      debuggerPort: 0,
-      debuggerEnabled: false,
-      exposePorts: [
-        {port: 8080},
-        {port: 8000},
-        ],
-      networks: [
-       {network: 'frontend'},
-       {network: 'backend'},
-      ],
-      environment: [
-        {envName: 'A', envValue: 'B'},
-        {envName: 'C', envValue: 'D'},
-        {envName: 'E'},
-        ],
-  }
-}
-
     static decodeModel(config: any) : Config {
       return {
         name: config.name,
