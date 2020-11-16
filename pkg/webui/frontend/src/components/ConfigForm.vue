@@ -3,7 +3,7 @@
     <FormulateForm
     name="config"
     v-model="config"
-    @submit="setSomeErrors"
+    @submit="handleSubmit"
     >
       <FormulateInput
         type="text"
@@ -67,10 +67,31 @@
           <FormulateInput            
             name="port"            
             validation="required|number|between:1,65535"
+            :placeholder="placeholders.exposePorts"    
           />
         </div>
      </FormulateInput>
      <FormulateInput
+        type="group"
+        name="environment"
+        :repeatable="true"
+        label="Environment"
+        add-label="+ Add Environment Variable"
+        :values="config.environment"
+      >
+       <div class="environment">
+          <FormulateInput            
+            name="envName"        
+            :placeholder="placeholders.envName"    
+            validation="required"
+          />
+          <FormulateInput
+            name="envValue"                        
+            :placeholder="placeholders.envValue"    
+          />
+        </div>
+     </FormulateInput>        
+      <FormulateInput
         type="group"
         name="networks"
         :repeatable="true"
@@ -82,31 +103,10 @@
           <FormulateInput
             name="network"                        
             validation="required"
+            :placeholder="placeholders.networks"    
           />
         </div>
      </FormulateInput>
-     
-     <FormulateInput
-        type="group"
-        name="environmentVariables"
-        :repeatable="true"
-        label="Environment"
-        add-label="+ Add Environment Variable"
-        v-model="config.environment"
-      >
-       <div class="environment">
-          <FormulateInput            
-            name="envName"            
-            validation="required"
-          />
-          <FormulateInput
-            name="envValue"                        
-          />
-        </div>
-     </FormulateInput>
-    <FormulateErrors />        
-          <br/>
-          <strong>config: {{ config }}</strong>
       <div class="actions">          
         <FormulateInput type="submit" label="Save" />        
       <FormulateInput
@@ -127,36 +127,9 @@
 import ConfigService from '../services/ConfigService';
 
 export default {
-  components: {
-    //   FormulateInput
-      },
    data () {
     return {
-      kakush: [
-        {envName: 1, envValue: 2},
-      ],
-      config: {
-            name: "",
-            outputBinPath: "",
-            buildCommand: "",
-            runCommand: "",
-            runtimeImage: "",
-            debuggerPort: 0,
-            debuggerEnabled: false,
-            exposePorts: [
-              {port: 8080},
-              {port: 8000},
-              ],
-            networks: [
-             {network: 'frontend'},
-             {network: 'backend'},
-            ],
-            environment: [
-              {envName: 'A', envValue: 'B'},
-              {envName: 'C', envValue: 'D'},
-              {envName: 'E'},
-              ],
-      },
+      config: ConfigService.defaultModel(),
       placeholders: {
         name: "awesome-app",
         outputBinPath: "",
@@ -165,9 +138,10 @@ export default {
         runtimeImage: "golang:latest",
         debuggerPort: 4321,
         debuggerEnabled: false,
-        exposePorts: [],
-        networks: [],
-        environment: [],
+        exposePorts: 'PORT[:PORT]',
+        networks: "private-network",
+        envName: "FOO",
+        envValue: "BAR",
       },
     }
   },
@@ -175,32 +149,22 @@ export default {
     console.log("mounted");
     ConfigService.get('/Users/moshe/Dev/cpp-gebug').then(
       response => {          
-        //this.config = response.data.data.config;
-
+        this.config = ConfigService.decodeModel(response.data.data.config);
         console.log('got response from sever, set config to: ', this.config, response.data.data.config);
         }
       );
   },
 
   methods: {
-    setSomeErrors () {
-       console.log(JSON.stringify(this.config));
-      // do some processing...
-      const errors = {
-        fieldErrors: { username: 'Sorry, no such username exists!' },
-        formErrors: ['Incorrect login, please try again.']
-      }
-      this.$formulate.handle(errors, 'config')
-    },
     reset () {
       console.log('reset called');    
       console.log(JSON.stringify(this.config));
-      // this.$formulate.reset('config')
+      this.$formulate.reset('config')
     },
-    handleSubmit() {
-      console.log('handle submit called');    
-
-      console.log(JSON.stringify(this.config));
+    handleSubmit(data) {
+      console.log("config: ", JSON.stringify(this.config));
+      console.log('handle submit called: ', data);     
+      ConfigService.save(ConfigService.encodeModel(data));
     }
   },
 };

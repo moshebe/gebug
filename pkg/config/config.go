@@ -57,6 +57,7 @@ func Load(input []byte) (*Config, error) {
 	return c, nil
 }
 
+// ResolvePath of the project while taking care valid suffixes like '/', '.gebug' etc.
 func ResolvePath(projectPath string) string {
 	if strings.HasSuffix(projectPath, Path) {
 		return projectPath
@@ -69,6 +70,7 @@ func ResolvePath(projectPath string) string {
 	return FilePath(projectPath, Path)
 }
 
+// Write the serialized configuration
 func (c Config) Write(writer io.Writer) error {
 	out, err := yaml.Marshal(c)
 	if err != nil {
