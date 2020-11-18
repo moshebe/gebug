@@ -19,10 +19,6 @@ type Server struct {
 
 const frontendDir = "./frontend/dist"
 
-func (s *Server) getConfig() {
-
-}
-
 //func (s *Server) handleGetConfig(writer http.ResponseWriter, request *http.Request) {
 //	ips, ok := request.URL.Query()["ip"]
 //

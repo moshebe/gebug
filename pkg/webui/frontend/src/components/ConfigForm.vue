@@ -1,4 +1,6 @@
 <template>
+  <div>
+  <p> Location: {{ location }} </p>
   <FormulateForm name="config" v-model="config" @submit="handleSubmit">
     <div class="inputs">
       <FormulateInput
@@ -117,6 +119,7 @@
       <FormulateInput type="button" label="Reset" data-ghost @click="reset" />
     </div>
   </FormulateForm>
+  </div>
 </template>
 
 <script>
@@ -163,11 +166,11 @@ export default {
 @import "../assets/snow.min.css";
 .inputs {
   display: grid;
-  padding: 150px;
   justify-content: center;
 }
 .actions {
   display: flex;
+  padding-top: 50px;
   margin-bottom: 1em;
   justify-content: center;
 }

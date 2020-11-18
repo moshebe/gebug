@@ -21,6 +21,7 @@ func errorResponse(c *gin.Context, code int, msg string) {
 }
 
 func HandleGetConfig(c *gin.Context) {
+	// TODO: try to get from env if not exists
 	workDir := c.Query("path")
 	if workDir == "" {
 		cwd, err := os.Getwd()
