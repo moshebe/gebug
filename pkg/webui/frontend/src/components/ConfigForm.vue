@@ -8,7 +8,7 @@
         :label="labels.name"
         validation="required"
         :validation-name="labels.name"
-        error-behavior="live"
+        error-behavior="blur"
         :placeholder="placeholders.name"
         v-model="config.name"
       />
@@ -17,7 +17,7 @@
         :label="labels.buildCommand"
         validation="required"
         :validation-name="labels.buildCommand"
-        error-behavior="live"
+        error-behavior="blur"
         :placeholder="placeholders.buildCommand"
         v-model="config.buildCommand"
       />
@@ -26,7 +26,7 @@
         :label="labels.runCommand"
         validation="required"
         :validation-name="labels.runCommand"
-        error-behavior="live"
+        error-behavior="blur"
         :placeholder="placeholders.runCommand"
         v-model="config.runCommand"
       />
@@ -35,7 +35,7 @@
         :label="labels.runtimeImage"
         validation="required"
         :validation-name="labels.runtimeImage"
-        error-behavior="live"
+        error-behavior="blur"
         :placeholder="placeholders.runtimeImage"
         v-model="config.runtimeImage"
       />
@@ -44,7 +44,7 @@
         :label="labels.outputBinary"
         validation="required"
         :validation-name="labels.outputBinary"
-        error-behavior="live"
+        error-behavior="blur"
         :placeholder="placeholders.outputBinary"
         v-model="config.outputBinary"
       />
@@ -111,7 +111,7 @@
         :label="labels.debuggerPort"
         :placeholder="placeholders.debuggerPort"
         v-model="config.debuggerPort"
-        v-if="config.debuggerEnabled == true"
+        v-if="config.debuggerEnabled === true"
       />
     </div>
     <div class="actions">
@@ -124,7 +124,8 @@
 
 <script>
 import ConfigService from "../services/ConfigService";
-import lang from "../lang";
+import lang from "../utils/lang";
+import settings from "../utils/settings";
 
 export default {
   props: {
@@ -145,10 +146,15 @@ export default {
     addLabels() {
       return lang.addLabels;
     },
+    settings() {
+      return settings;
+    },
+    envs() {
+      return process.env;
+    }
   },
   async mounted() {
-    const remoteConfig = await ConfigService.get(this.location);
-    this.config = remoteConfig;
+    this.config = await ConfigService.get(this.location);
   },
 
   methods: {
@@ -156,7 +162,7 @@ export default {
       this.$formulate.reset("config");
     },
     handleSubmit(data) {
-      ConfigService.save(this.location, data);
+      ConfigService.save(data);
     },
   },
 };
@@ -173,10 +179,6 @@ export default {
   padding-top: 50px;
   margin-bottom: 1em;
   justify-content: center;
-}
-.actions .formulate-input {
-  margin-right: 1em;
-  margin-bottom: 0;
 }
 
 .environment {
