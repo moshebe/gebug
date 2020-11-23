@@ -17,12 +17,12 @@ var uiPort int
 
 const (
 	imageName     = "gebug-ui"
-	defaultUiPort = 3030
+	defaultUIPort = 3030
 )
 
 func init() {
 	uiCmd.PersistentFlags().StringVar(&projectPath, "path", ".", "project directory path")
-	uiCmd.PersistentFlags().IntVar(&uiPort, "port", defaultUiPort, "web UI port")
+	uiCmd.PersistentFlags().IntVar(&uiPort, "port", defaultUIPort, "web UI port")
 
 	rootCmd.AddCommand(uiCmd)
 }

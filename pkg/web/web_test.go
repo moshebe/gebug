@@ -35,8 +35,7 @@ func TestRenderDockerCompose(t *testing.T) {
 			input: &Opts{
 				Location: "/Users/me/Dev/awesome-app",
 			},
-			wantErr:    false,
-			goldenFile: "render_0",
+			wantErr:    true,
 		},
 		{
 			input: &Opts{
@@ -66,16 +65,4 @@ func TestRenderDockerCompose(t *testing.T) {
 		assertion.Equal(bytes.NewBuffer(goldenData).String(), got.String())
 	}
 
-}
-
-func TestRenderDockerCompose2(t *testing.T) {
-	file, err := ioutil.TempFile("", "gebug-webui-docker-compose.*.yml")
-	assert.NoError(t, err)
-	t.Log(file.Name())
-
-	err = RenderDockerCompose(&Opts{
-		ImageName: "gebug-ui",
-		Port:      3030,
-		Location:  "/Users/me/Dev/awesome-app",
-	}, file)
 }

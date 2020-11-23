@@ -21,24 +21,23 @@ services:
       - {{.Port}}:{{.Port}}
     volumes:
       - {{.Location}}:{{.Location}}`
-
-	defaultPort      = 3030
-	defaultImageName = "gebug-ui" // TODO: replace?? also in the tests and goldens
 )
 
+// Opts represents the docker-compose configuration file rendering options
 type Opts struct {
 	ImageName string
 	Port      int
 	Location  string
 }
 
+// RenderDockerCompose renders the docker-compose template and outputs the result into the given writer
 func RenderDockerCompose(options *Opts, writer io.Writer) error {
 	if options.Port == 0 {
 		options.Port = 3030
 	}
 
 	if options.ImageName == "" {
-		options.ImageName = defaultImageName
+		return errors.New("invalid image name")
 	}
 
 	if options.Location == "" {
@@ -63,6 +62,9 @@ type dummyLogger struct {
 
 func (dummyLogger) Printf(string, ...interface{}) {
 }
+
+// ReadinessProbe monitors a given URL until it received status OK (200) or gets to the timeout
+// currently 10 retries with exponential backoff
 func ReadinessProbe(url string, verbose bool) error {
 	retryClient := retryablehttp.NewClient()
 	if !verbose {

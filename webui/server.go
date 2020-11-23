@@ -15,7 +15,7 @@ import (
 	"path/filepath"
 )
 
-type Server struct {
+type server struct {
 	port     int
 	location string
 	cancel   context.CancelFunc
@@ -34,7 +34,7 @@ func errorResponse(c *gin.Context, code int, msg string) {
 	})
 }
 
-func (s Server) handleGetConfig(c *gin.Context) {
+func (s server) handleGetConfig(c *gin.Context) {
 	response := struct {
 		Location   string         `json:"location"`
 		HasProject bool           `json:"has_project"`
@@ -73,7 +73,7 @@ func (s Server) handleGetConfig(c *gin.Context) {
 	})
 }
 
-func (s Server) handleCreateConfig(c *gin.Context) {
+func (s server) handleCreateConfig(c *gin.Context) {
 	data := struct {
 		Config config.Config `json:"config"`
 	}{}
@@ -116,7 +116,7 @@ func (s Server) handleCreateConfig(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-func CORSMiddleware() gin.HandlerFunc {
+func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -132,7 +132,7 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 
-func (s *Server) Start() error {
+func (s *server) Start() error {
 	s.location = config.ResolvePath(s.location)
 	s.logger.Debug("Resolved project location", zap.String("path", s.location))
 
@@ -140,7 +140,7 @@ func (s *Server) Start() error {
 	http.Handle("/", fs)
 
 	r := gin.Default()
-	r.Use(CORSMiddleware())
+	r.Use(corsMiddleware())
 	r.Use(static.Serve("/", static.LocalFile(frontendDir, true)))
 
 	r.GET("/config", s.handleGetConfig)
@@ -177,7 +177,7 @@ func main() {
 	if location == "" {
 		logger.Sugar().Fatalf("Could not find project location, make sure '%s' was set correctly", locationEnvName)
 	}
-	s := &Server{
+	s := &server{
 		port:     defaultServerPort,
 		location: location,
 		logger:   logger,
