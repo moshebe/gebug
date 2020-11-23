@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Gebug" src="./assets/logo.png" width="500" height="300" />
+    <img alt="Gebug" src="assets/logo.png" width="500" height="300" />
     <div style="text-align: center;">
       <ConfigForm :location="settings.location" />
     </div>
