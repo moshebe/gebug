@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
       - uses: docker/login-action@v1
         with:
             username: gebug
@@ -27,5 +30,5 @@ jobs:
         with:
             context: .
             file: webui/Dockerfile
-            push: true
+#            push: true
             tags: gebug/webui:latest
