@@ -14,6 +14,10 @@ COPY ./pkg ./pkg
 RUN go mod download
 
 COPY ./webui ./webui
+WORKDIR $GOPATH/src/github.com/moshebe/gebug/webui/frontend
+RUN yarn install
+RUN yarn build && cp -r src/assets dist
+
 WORKDIR $GOPATH/src/github.com/moshebe/gebug/webui
-RUN cd frontend && yarn build && cp -r src/assets dist
+RUN cd frontend && cp -r src/assets dist
 ENTRYPOINT go run server.go
