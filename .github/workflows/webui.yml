@@ -17,25 +17,14 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+            username: gebug
+            password: ${{ secrets.DOCKERHUB_PASS }}
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
-          username: gebug
-          password: ${{ secrets.DOCKERHUB_PASS }}
-          repository: gebug/webui:latest
-#          tag_with_ref: true
-
-#      - uses: actions/checkout@v2
-#      - name: Login to DockerHub
-#        uses: docker/login-action@v1
-#        with:
-#            username: gebug
-#            password: ${{ secrets.DOCKERHUB_PASS }}
-#      - name: Build and push
-#        uses: docker/build-push-action@v2
-#        with:
-#            context: .
-#            file: webui/Dockerfile
-#            platforms: linux/amd64,linux/arm64,linux/386
-#            push: true
-#            tags: gebug/webui:latest
+            context: .
+            file: webui/Dockerfile
+            push: true
+            tags: gebug/webui:latest
