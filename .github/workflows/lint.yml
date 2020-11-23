@@ -1,16 +1,16 @@
 name: lint
 on: push
 
-jobs:
-  lint:
-    strategy:
-      matrix:
-        goVer: [1.14 1.15]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: docker://golangci/golangci-lint:v1.23.8
-        with:
-          args: golangci-lint run
-        env:
-          CGO_ENABLED: 0
+#jobs:
+#  lint:
+#    strategy:
+#      matrix:
+#        goVer: [1.14 1.15]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: docker://golangci/golangci-lint:v1.23.8
+#        with:
+#          args: golangci-lint run
+#        env:
+#          CGO_ENABLED: 0

@@ -1,22 +1,22 @@
 name: test
-on: push
-jobs:
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        goVer: [1.13, 1.14]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v1
-        with:
-          go-version: ${{ matrix.goVer }}
-      - run: go test -cover ./...
-        env:
-          CGO_ENABLED: 0
-      - name: coverage
-        if: github.repository_owner == 'moshebe'
-        run: |
-          make coverage
-          bash <(curl -s https://codecov.io/bash)
+#on: push
+#jobs:
+#  test:
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os: [ubuntu-latest, macos-latest]
+#        goVer: [1.13, 1.14]
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-go@v1
+#        with:
+#          go-version: ${{ matrix.goVer }}
+#      - run: go test -cover ./...
+#        env:
+#          CGO_ENABLED: 0
+#      - name: coverage
+#        if: github.repository_owner == 'moshebe'
+#        run: |
+#          make coverage
+#          bash <(curl -s https://codecov.io/bash)
