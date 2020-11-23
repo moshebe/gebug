@@ -71,7 +71,6 @@ var uiCmd = &cobra.Command{
 		wg.Add(1)
 		go func() {
 			defer func() {
-				zap.L().Info("Finishing!!!!")
 				wg.Done()
 			}()
 			if err := osutil.RunCommand(fmt.Sprintf("docker-compose -f %s up", file.Name())); err != nil {
