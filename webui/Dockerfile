@@ -9,13 +9,11 @@ RUN npm install yarn -g
 
 WORKDIR $GOPATH/src/github.com/moshebe/gebug
 ENV VUE_APP_PORT 3030
-
 COPY go.mod go.sum ./
-
 COPY ./pkg ./pkg
-
 RUN go mod download
 
-WORKDIR $GOPATH/src/github.com/moshebe/gebug/pkg/webui
-RUN cd frontend && yarn build
+COPY ./webui ./webui
+WORKDIR $GOPATH/src/github.com/moshebe/gebug/webui
+RUN cd frontend && yarn build && cp -r src/assets dist
 ENTRYPOINT go run server.go

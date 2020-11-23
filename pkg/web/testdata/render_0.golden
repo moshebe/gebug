@@ -1,0 +1,11 @@
+version: '3'
+services:
+  gebug-webui:
+    image: gebug-ui
+    environment:
+      - PORT=3030
+      - VUE_APP_GEBUG_PROJECT_LOCATION=/Users/me/Dev/awesome-app
+    ports:
+      - 3030:3030
+    volumes:
+      - /Users/me/Dev/awesome-app:/Users/me/Dev/awesome-app

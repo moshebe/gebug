@@ -24,7 +24,7 @@ type Server struct {
 
 const (
 	frontendDir       = "./frontend/dist"
-	locationEnvName   = "GEBUG_PROJECT_LOCATION"
+	locationEnvName   = "VUE_APP_GEBUG_PROJECT_LOCATION"
 	defaultServerPort = 3030
 )
 
@@ -78,13 +78,14 @@ func (s Server) handleCreateConfig(c *gin.Context) {
 		Config config.Config `json:"config"`
 	}{}
 
+	s.logger.Debug("Got save config request")
 	err := json.NewDecoder(c.Request.Body).Decode(&data)
 	if err != nil {
 		s.logger.Error("Failed to decode request body", zap.Error(err))
 		errorResponse(c, http.StatusBadRequest, "invalid request body")
 		return
 	}
-
+	s.logger.Debug("Received config from client", zap.Any("config", data.Config))
 	if !osutil.FileExists(s.location) {
 		configDir := filepath.Dir(s.location)
 		if err = os.MkdirAll(configDir, os.ModePerm); err != nil {
@@ -117,7 +118,7 @@ func (s Server) handleCreateConfig(c *gin.Context) {
 
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*") // TODO: do we really want to enable all?
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
@@ -151,25 +152,30 @@ func (s *Server) Start() error {
 		c.File(frontendDir + "/index.html")
 	})
 
-	//ctx, cancel := context.WithCancel(context.Background())
 	fmt.Println("Server listening on port ", s.port)
 	return r.Run()
-
-	//return http.ListenAndServe(":"+strconv.Itoa(s.port), nil)
 }
 
 func main() {
-	logger, err := zap.NewDevelopment()
+	logConfig := zap.NewDevelopmentConfig()
+	if os.Getenv("VERBOSE") == "" {
+		gin.SetMode(gin.ReleaseMode)
+		logConfig.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
+	}
+
+	logger, err := logConfig.Build()
 	if err != nil {
 		panic(err)
 	}
-	defer logger.Sync()
+	defer func() {
+		_ = logger.Sync()
+	}()
 
 	logger.Info("Initializing...")
 
 	location := os.Getenv(locationEnvName)
 	if location == "" {
-		logger.Sugar().Fatal("Could not find project location, make sure '%s' was set correctly", locationEnvName)
+		logger.Sugar().Fatalf("Could not find project location, make sure '%s' was set correctly", locationEnvName)
 	}
 	s := &Server{
 		port:     defaultServerPort,
@@ -178,7 +184,7 @@ func main() {
 	}
 	logger.Info("Starting server...", zap.Int("port", s.port), zap.String("location", s.location))
 	err = s.Start()
-	if err != nil { // TODO: check if it was close gracefully
+	if err != nil {
 		logger.Fatal("Unexpected error while running server", zap.Error(err))
 	}
 }
