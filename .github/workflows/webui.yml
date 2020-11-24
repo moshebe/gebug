@@ -1,10 +1,5 @@
 name: webui
-on:
-  push:
-    branches:
-      - master
-      - main
-
+on: push
 env:
   IMAGE_NAME: gebug-webui
 
