@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
@@ -17,7 +16,6 @@ import (
 type server struct {
 	port     int
 	location string
-	cancel   context.CancelFunc
 	logger   *zap.Logger
 }
 

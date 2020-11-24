@@ -29,4 +29,7 @@ export default {
         environment: '+ Add Environment Variable',
         exposePorts: '+ Add Port',
     },
+    help: {
+        debuggerPort: 'Delve debugger port',
+    }
 };

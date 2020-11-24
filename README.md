@@ -31,6 +31,7 @@ Available Commands:
   help        Help about any command
   init        Initialize a Gebug project
   start       Start Gebug services
+  ui          Start Gebug web UI
   version     Gebug's version
 
 Flags:
@@ -75,6 +76,15 @@ Let's examine the `config.yaml` fields so you will feel more comfortable editing
 | networks     	    | []                               	    | list of docker external networks to join. if no network is selected, a new one will be created                                                                                                                                            |
 | environment     	| []                               	    | list of environment variables to be set inside the container. Syntax: `FOO=BAR` or just `FOO` which will take the variable `FOO` from host and set it with its value                                                                      |
 
+# Web UI
+If you prefer a web interface over a terminal or YAML file, you can simply run the following command in your Gebug project directory
+```
+gebug ui
+``` 
+A simple web application will be opened and let you control the Gebug configuration of your project directly from your browser.  
+
+![](assets/demo-webui.gif)
+ 
 # License
 Gebug is released under the Apache 2.0 license. See LICENSE.
 

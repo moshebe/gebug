@@ -2,25 +2,19 @@
   <div id="app">
     <img alt="Gebug" src="assets/logo.png" width="500" height="300" />
     <div style="text-align: center;">
-      <ConfigForm :location="settings.location" />
+      <ConfigForm/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import settings from "@/utils/settings";
 import ConfigForm from "./components/ConfigForm.vue";
 
 @Component({
   components: {
     ConfigForm,
   },
-  computed: {
-    settings() {
-      return settings;
-    }
-  }
 })
 export default class App extends Vue {}
 </script>

@@ -1,12 +1,11 @@
 name: webui
 on:
-- push
+  push:
     paths:
-      - "webui/*"
+      - 'webui/**'
     branches:
       - master
       - main
-
 env:
   IMAGE_NAME: gebug-webui
 
