@@ -81,7 +81,8 @@ If you prefer a web interface over a terminal or YAML file, you can simply run t
 ```
 gebug ui
 ``` 
-A simple web application will be opened and let you control the Gebug configuration of your project directly from your browser.
+A simple web application will be opened and let you control the Gebug configuration of your project directly from your browser.  
+
 ![](assets/demo-webui.gif)
  
 # License
