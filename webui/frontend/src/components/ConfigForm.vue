@@ -179,6 +179,10 @@ export default {
       this.$formulate.reset("config");
     },
     handleSubmit(data) {
+      this.$bvToast.toast('Gebug configuration was updated successfully', {
+        title: 'Update Configuration',
+        autoHideDelay: 5000,
+      })
       ConfigService.save(data);
     },
   },
