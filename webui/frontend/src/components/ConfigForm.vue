@@ -126,7 +126,7 @@
                   :label="labels.debuggerPort"
                   :placeholder="placeholders.debuggerPort"
                   v-model="config.debuggerPort"
-                  v-if="config.debuggerEnabled === true"
+                  v-if="config.debuggerEnabled"
                   :help="help.debuggerPort"
               />
             </div>
