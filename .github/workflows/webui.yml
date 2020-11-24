@@ -1,8 +1,6 @@
 name: webui
 on:
-- push
-    paths:
-      - "webui/*"
+- push:
     branches:
       - master
       - main
