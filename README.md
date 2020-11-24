@@ -31,6 +31,7 @@ Available Commands:
   help        Help about any command
   init        Initialize a Gebug project
   start       Start Gebug services
+  ui          Start Gebug web UI
   version     Gebug's version
 
 Flags:
