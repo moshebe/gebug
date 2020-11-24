@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/moshebe/gebug/pkg/config"
@@ -152,7 +151,6 @@ func (s *server) Start() error {
 		c.File(frontendDir + "/index.html")
 	})
 
-	fmt.Println("Server listening on port ", s.port)
 	return r.Run()
 }
 
