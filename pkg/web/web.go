@@ -64,13 +64,12 @@ func (dummyLogger) Printf(string, ...interface{}) {
 }
 
 // ReadinessProbe monitors a given URL until it received status OK (200) or gets to the timeout
-// currently 10 retries with exponential backoff
 func ReadinessProbe(url string, verbose bool) error {
 	retryClient := retryablehttp.NewClient()
 	if !verbose {
 		retryClient.Logger = dummyLogger{}
 	}
-	retryClient.RetryMax = 10
+	retryClient.RetryMax = 25
 	resp, err := retryClient.Get(url)
 	if err != nil {
 		return err

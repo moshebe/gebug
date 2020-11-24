@@ -16,7 +16,7 @@ func TestRenderDockerCompose(t *testing.T) {
 	}{
 		{
 			input: &Opts{
-				ImageName: "gebug-ui",
+				ImageName: "gebug/webui",
 				Port:      3030,
 				Location:  "/Users/me/Dev/awesome-app",
 			},
@@ -25,7 +25,7 @@ func TestRenderDockerCompose(t *testing.T) {
 		},
 		{
 			input: &Opts{
-				ImageName: "gebug-ui",
+				ImageName: "gebug/webui",
 				Location:  "/Users/me/Dev/awesome-app",
 			},
 			wantErr:    false,
@@ -39,7 +39,7 @@ func TestRenderDockerCompose(t *testing.T) {
 		},
 		{
 			input: &Opts{
-				ImageName: "gebug-ui",
+				ImageName: "gebug/webui",
 				Port:      3030,
 				Location:  "",
 			},

@@ -16,7 +16,7 @@ var projectPath string
 var uiPort int
 
 const (
-	imageName     = "gebug-ui"
+	imageName     = "gebug/webui"
 	defaultUIPort = 3030
 )
 

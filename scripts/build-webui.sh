@@ -1,2 +1,2 @@
-IMAGE=gebug-ui
+IMAGE=gebug/webui
 docker build . -t $IMAGE -f webui/Dockerfile
