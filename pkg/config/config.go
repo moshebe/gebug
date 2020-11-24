@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/spf13/afero"
 	"io"
+	"path"
 	"reflect"
 	"strings"
 
@@ -16,16 +17,16 @@ var AppFs = afero.NewOsFs()
 
 // Config contains the fields of gebug configuration
 type Config struct {
-	Name             string   `yaml:"name"`
-	OutputBinaryPath string   `yaml:"output_binary"`
-	BuildCommand     string   `yaml:"build_command"`
-	RunCommand       string   `yaml:"run_command"`
-	RuntimeImage     string   `yaml:"runtime_image"`
-	DebuggerEnabled  bool     `yaml:"debugger_enabled"`
-	DebuggerPort     int      `yaml:"debugger_port"`
-	ExposePorts      []string `yaml:"expose_ports"`
-	Networks         []string `yaml:"networks"`
-	Environment      []string `yaml:"environment"`
+	Name             string   `yaml:"name" json:"name"`
+	OutputBinaryPath string   `yaml:"output_binary" json:"outputBinary"`
+	BuildCommand     string   `yaml:"build_command" json:"buildCommand"`
+	RunCommand       string   `yaml:"run_command" json:"runCommand"`
+	RuntimeImage     string   `yaml:"runtime_image" json:"runtimeImage"`
+	DebuggerEnabled  bool     `yaml:"debugger_enabled" json:"debuggerEnabled"`
+	DebuggerPort     int      `yaml:"debugger_port" json:"debuggerPort"`
+	ExposePorts      []string `yaml:"expose_ports" json:"exposePorts"`
+	Networks         []string `yaml:"networks" json:"networks"`
+	Environment      []string `yaml:"environment" json:"environment"`
 }
 
 func updateBuildCommand(buildCommand string, debuggerEnabled bool) string {
@@ -56,6 +57,20 @@ func Load(input []byte) (*Config, error) {
 	return c, nil
 }
 
+// ResolvePath of the project while taking care valid suffixes like '/', '.gebug' etc.
+func ResolvePath(projectPath string) string {
+	if strings.HasSuffix(projectPath, Path) {
+		return projectPath
+	}
+
+	if strings.HasSuffix(projectPath, RootDir) || strings.HasSuffix(projectPath, RootDir+"/") {
+		return path.Join(projectPath, Path)
+	}
+
+	return FilePath(projectPath, Path)
+}
+
+// Write the serialized configuration
 func (c Config) Write(writer io.Writer) error {
 	out, err := yaml.Marshal(c)
 	if err != nil {

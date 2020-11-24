@@ -1,0 +1,62 @@
+{
+  "name": "gebug",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@braid/vue-formulate": "^2.4.5",
+    "@vue/composition-api": "^1.0.0-beta.16",
+    "axios": "^0.20.0",
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.6",
+    "vue-property-decorator": "^9.1.2",
+    "vuelidate": "^0.7.5",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.11.5",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "mutationobserver-shim": "^0.3.7",
+    "popper.js": "^1.16.1",
+    "portal-vue": "^2.1.7",
+    "sass": "^1.26.11",
+    "sass-loader": "^10.0.2",
+    "typescript": "~3.9.3",
+    "vue-cli-plugin-bootstrap-vue": "~0.7.0",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "@vue/typescript"
+    ],
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

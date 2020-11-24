@@ -1,0 +1,34 @@
+name: webui
+on:
+- push
+    paths:
+      - "webui/*"
+    branches:
+      - master
+      - main
+
+env:
+  IMAGE_NAME: gebug-webui
+
+jobs:
+  dockerhub:
+    name: Push Web UI Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - uses: docker/login-action@v1
+        with:
+            username: gebug
+            password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Build & Push to Docker Hub
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+            context: .
+            file: webui/Dockerfile
+            push: true
+            tags: gebug/webui:latest
