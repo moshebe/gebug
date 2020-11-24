@@ -125,15 +125,12 @@
 <script>
 import ConfigService from "../services/ConfigService";
 import lang from "../utils/lang";
-import settings from "../utils/settings";
 
 export default {
-  props: {
-    location: String,
-  },
   data() {
     return {
       config: {},
+      location: '',
     };
   },
   computed: {
@@ -146,15 +143,11 @@ export default {
     addLabels() {
       return lang.addLabels;
     },
-    settings() {
-      return settings;
-    },
-    envs() {
-      return process.env;
-    }
   },
   async mounted() {
-    this.config = await ConfigService.get(this.location);
+    const res = await ConfigService.get(this.location);
+    this.config = res.config;
+    this.location = res.location;
   },
 
   methods: {

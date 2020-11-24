@@ -80,7 +80,8 @@ export default class ConfigService {
             return defaultValue;
         }
 
-        return this.decode(res.data.data.config);
+        const config = this.decode(res.data.data.config);
+        return {config: config, location: res.data.data.location};
     }
 
     static async save(config: Config) {
