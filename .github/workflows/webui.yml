@@ -24,11 +24,11 @@ jobs:
         with:
             username: gebug
             password: ${{ secrets.DOCKERHUB_PASS }}
-      - name: Push to Docker Hub
+      - name: Build & Push to Docker Hub
         id: docker_build
         uses: docker/build-push-action@v2
         with:
             context: .
             file: webui/Dockerfile
-#            push: true
+            push: true
             tags: gebug/webui:latest
