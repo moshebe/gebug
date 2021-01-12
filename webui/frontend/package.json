@@ -36,7 +36,7 @@
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
     "sass": "^1.32.2",
-    "sass-loader": "^10.1.0",
+    "sass-loader": "^10.1.1",
     "typescript": "~4.1.3",
     "vue-cli-plugin-bootstrap-vue": "~0.7.0",
     "vue-template-compiler": "^2.6.11"
