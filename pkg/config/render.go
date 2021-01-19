@@ -73,6 +73,8 @@ func (c *Config) RenderDockerfile(writer io.Writer) error {
 RUN go get github.com/githubnemo/CompileDaemon
 RUN go get github.com/go-delve/delve/cmd/dlv
 
+{{- if .PreRunCommands}}{{range .PreRunCommands}}
+RUN {{.}}{{end}}{{end}}
 WORKDIR /src
 COPY . .
 
@@ -80,6 +82,6 @@ COPY . .
 RUN {{.BuildCommand}}
 ENTRYPOINT dlv --listen=:{{.DebuggerPort}} --headless=true --api-version=2 --accept-multiclient exec {{.OutputBinaryPath}}
 {{- else -}}
-ENTRYPOINT CompileDaemon -log-prefix=false -build="{{.BuildCommand}}" -command="{{.RunCommand}}"
+ENTRYPOINT CompileDaemon -log-prefix=false -build="{{.BuildCommand}}"{{if .BuildDir }} -build-dir="{{.BuildDir}}"{{ end}} -command="{{.RunCommand}}"
 {{- end}}`, writer)
 }
