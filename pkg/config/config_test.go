@@ -121,6 +121,7 @@ func TestConfig_Write(t *testing.T) {
 				Name:             "my-app",
 				OutputBinaryPath: "/app",
 				BuildCommand:     "go build -o /app -gcflags=\"all=-N-l\"",
+				BuildDir:         "/app",
 				RunCommand:       "/app",
 				RuntimeImage:     "golang:1.15.2",
 				DebuggerPort:     40000,
@@ -130,6 +131,7 @@ func TestConfig_Write(t *testing.T) {
 			expected: `name: my-app
 output_binary: /app
 build_command: go build -o /app -gcflags="all=-N-l"
+build_dir: /app
 run_command: /app
 runtime_image: golang:1.15.2
 debugger_enabled: true

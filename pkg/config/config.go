@@ -19,7 +19,9 @@ var AppFs = afero.NewOsFs()
 type Config struct {
 	Name             string   `yaml:"name" json:"name"`
 	OutputBinaryPath string   `yaml:"output_binary" json:"outputBinary"`
+	PreRunCommands   []string `yaml:"pre_run_commands,omitempty" json:"preRunCommands"`
 	BuildCommand     string   `yaml:"build_command" json:"buildCommand"`
+	BuildDir         string   `yaml:"build_dir" json:"buildDir"`
 	RunCommand       string   `yaml:"run_command" json:"runCommand"`
 	RuntimeImage     string   `yaml:"runtime_image" json:"runtimeImage"`
 	DebuggerEnabled  bool     `yaml:"debugger_enabled" json:"debuggerEnabled"`
