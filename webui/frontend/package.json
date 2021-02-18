@@ -31,7 +31,7 @@
     "babel-eslint": "^10.1.0",
     "bootstrap": "^4.6.0",
     "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^7.5.0",
+    "eslint-plugin-vue": "^7.6.0",
     "mutationobserver-shim": "^0.3.7",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
