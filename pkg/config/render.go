@@ -3,6 +3,7 @@ package config
 import (
 	"io"
 
+	"github.com/iancoleman/strcase"
 	"github.com/moshebe/gebug/pkg/render"
 	"github.com/pkg/errors"
 )
@@ -23,7 +24,9 @@ func (c *Config) renderedWrite(template string, writer io.Writer) error {
 
 // RenderDockerComposeFile writes the docker-compose.yml configuration to writer
 func (c *Config) RenderDockerComposeFile(writer io.Writer) error {
-	return c.renderedWrite(`version: '3'
+	cfg := *c
+	cfg.Name = strcase.ToKebab(cfg.Name)
+	return cfg.renderedWrite(`version: '3'
 services:
   gebug-{{.Name}}:
     build:

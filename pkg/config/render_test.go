@@ -18,6 +18,27 @@ var mockConfig = &Config{
 	ExposePorts:      []string{"8080"},
 }
 
+func TestConfig_RenderDockerComposeFileCamlCaseAppName(t *testing.T) {
+	cfg := *mockConfig
+	cfg.Name = "myApp2"
+	out := bytes.NewBufferString("")
+	err := cfg.RenderDockerComposeFile(out)
+	assert.NoError(t, err)
+	assert.Equal(t,
+		`version: '3'
+services:
+  gebug-my-app-2:
+    build:
+      context: ..
+      dockerfile: .gebug/Dockerfile
+    volumes:
+      - ../:/src:ro
+    ports:
+      - 8080
+`,
+		out.String())
+}
+
 func TestConfig_RenderDockerComposeFile(t *testing.T) {
 	out := bytes.NewBufferString("")
 	err := mockConfig.RenderDockerComposeFile(out)
