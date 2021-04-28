@@ -7,7 +7,7 @@ require (
 	github.com/gin-gonic/contrib v0.0.0-20201005132743-ca038bbf2944
 	github.com/gin-gonic/gin v1.7.1
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/hashicorp/go-retryablehttp v0.6.8
+	github.com/hashicorp/go-retryablehttp v0.7.0
 	github.com/iancoleman/strcase v0.1.3
 	github.com/manifoldco/promptui v0.8.0
 	github.com/pkg/browser v0.0.0-20201112035734-206646e67786
