@@ -5,7 +5,7 @@ go 1.14
 require (
 	github.com/asaskevich/govalidator v0.0.0-20200428143746-21a406dcc535
 	github.com/gin-gonic/contrib v0.0.0-20201005132743-ca038bbf2944
-	github.com/gin-gonic/gin v1.7.1
+	github.com/gin-gonic/gin v1.7.2
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/go-retryablehttp v0.7.0
 	github.com/iancoleman/strcase v0.1.3
