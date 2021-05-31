@@ -12,7 +12,7 @@
     "@vue/composition-api": "^1.0.0-rc.10",
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
-    "core-js": "^3.13.0",
+    "core-js": "^3.13.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.1.2",
