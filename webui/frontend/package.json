@@ -13,7 +13,7 @@
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.13.0",
-    "vue": "^2.6.13",
+    "vue": "^2.6.14",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.1.2",
     "vuelidate": "^0.7.6",
@@ -39,7 +39,7 @@
     "sass-loader": "^11.1.1",
     "typescript": "~4.3.2",
     "vue-cli-plugin-bootstrap-vue": "~0.7.0",
-    "vue-template-compiler": "^2.6.13"
+    "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
     "root": true,
