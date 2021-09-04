@@ -1,15 +1,14 @@
 package input
 
 import (
-	"github.com/spf13/afero"
 	"io/ioutil"
 	"os"
 	"path"
 
-	"github.com/moshebe/gebug/pkg/osutil"
-
 	"github.com/moshebe/gebug/pkg/config"
+	"github.com/moshebe/gebug/pkg/osutil"
 	"github.com/pkg/errors"
+	"github.com/spf13/afero"
 	"go.uber.org/zap"
 )
 
@@ -62,7 +61,9 @@ func save(workDir string, currentConfig *config.Config) error {
 	if err != nil {
 		return errors.WithMessage(err, "create config file")
 	}
-	defer configFile.Close()
+	defer func() {
+		_ = configFile.Close()
+	}()
 
 	err = currentConfig.Write(configFile)
 	if err != nil {

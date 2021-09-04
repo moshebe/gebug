@@ -2,11 +2,11 @@ package config
 
 import (
 	"bytes"
-	"github.com/moshebe/gebug/pkg/testutil"
 	"io"
 	"strconv"
 	"testing"
 
+	"github.com/moshebe/gebug/pkg/testutil"
 	"github.com/stretchr/testify/assert"
 )
 

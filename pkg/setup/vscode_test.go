@@ -2,13 +2,14 @@ package setup
 
 import (
 	"bytes"
-	"github.com/moshebe/gebug/pkg/testutil"
-	"github.com/spf13/afero"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"path"
 	"strconv"
 	"testing"
+
+	"github.com/moshebe/gebug/pkg/testutil"
+	"github.com/spf13/afero"
+	"github.com/stretchr/testify/assert"
 )
 
 var mockVsCode = &VsCode{baseIde{

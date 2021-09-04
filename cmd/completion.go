@@ -16,16 +16,16 @@ limitations under the License.
 package cmd
 
 import (
-	"go.uber.org/zap"
 	"os"
 
 	"github.com/spf13/cobra"
+	"go.uber.org/zap"
 )
 
 // completionCmd represents the completion command
 var completionCmd = &cobra.Command{
-	Use:                   "completion [bash|zsh|fish|powershell]",
-	Short:                 "Generate completion script",
+	Use:   "completion [bash|zsh|fish|powershell]",
+	Short: "Generate completion script",
 	Long: `To load completions:
 
 Bash:

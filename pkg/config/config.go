@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/spf13/afero"
 	"io"
 	"path"
 	"reflect"
@@ -9,6 +8,7 @@ import (
 
 	"github.com/moshebe/gebug/pkg/render"
 	"github.com/pkg/errors"
+	"github.com/spf13/afero"
 	"gopkg.in/yaml.v2"
 )
 

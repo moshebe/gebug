@@ -1,9 +1,10 @@
 package setup
 
 import (
+	"path"
+
 	"github.com/pkg/errors"
 	"github.com/spf13/afero"
-	"path"
 )
 
 // AppFs hold the file-system abstraction for this package

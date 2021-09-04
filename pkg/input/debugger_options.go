@@ -2,14 +2,14 @@ package input
 
 import (
 	"fmt"
-	"github.com/moshebe/gebug/pkg/setup"
-	"github.com/moshebe/gebug/pkg/validate"
-	"github.com/pkg/errors"
-	"go.uber.org/zap"
 	"strconv"
 
 	"github.com/manifoldco/promptui"
 	"github.com/moshebe/gebug/pkg/config"
+	"github.com/moshebe/gebug/pkg/setup"
+	"github.com/moshebe/gebug/pkg/validate"
+	"github.com/pkg/errors"
+	"go.uber.org/zap"
 )
 
 const (

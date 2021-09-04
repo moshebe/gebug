@@ -2,14 +2,15 @@ package cmd
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
+	"sync"
+
 	"github.com/moshebe/gebug/pkg/osutil"
 	"github.com/moshebe/gebug/pkg/web"
 	"github.com/pkg/browser"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
-	"io/ioutil"
-	"os"
-	"sync"
 )
 
 var projectPath string
