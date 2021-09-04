@@ -2,10 +2,11 @@ package web
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"path/filepath"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestRenderDockerCompose(t *testing.T) {
@@ -35,7 +36,7 @@ func TestRenderDockerCompose(t *testing.T) {
 			input: &Opts{
 				Location: "/Users/me/Dev/awesome-app",
 			},
-			wantErr:    true,
+			wantErr: true,
 		},
 		{
 			input: &Opts{
@@ -48,7 +49,7 @@ func TestRenderDockerCompose(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		assertion := assert.New(t)
+		assertion := require.New(t)
 		got := bytes.NewBufferString("")
 		err := RenderDockerCompose(test.input, got)
 		if test.wantErr {

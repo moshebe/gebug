@@ -1,9 +1,10 @@
 package config
 
 import (
+	"testing"
+
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestConfig_Generate(t *testing.T) {

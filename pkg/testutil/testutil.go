@@ -2,11 +2,12 @@ package testutil
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"path"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // RunTestData runs all the tests resides in the `testdata` directory and their input/golden file has the following prefix

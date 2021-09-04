@@ -2,15 +2,16 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"path/filepath"
+
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/moshebe/gebug/pkg/config"
 	"github.com/moshebe/gebug/pkg/osutil"
 	"go.uber.org/zap"
-	"io/ioutil"
-	"net/http"
-	"os"
-	"path/filepath"
 )
 
 type server struct {

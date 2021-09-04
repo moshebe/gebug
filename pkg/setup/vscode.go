@@ -2,11 +2,12 @@ package setup
 
 import (
 	"encoding/json"
-	"github.com/pkg/errors"
-	"github.com/spf13/afero"
 	"os"
 	"path"
 	"regexp"
+
+	"github.com/pkg/errors"
+	"github.com/spf13/afero"
 )
 
 const (

@@ -1,9 +1,10 @@
 package setup
 
 import (
+	"testing"
+
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestIde_detected(t *testing.T) {

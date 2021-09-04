@@ -2,11 +2,12 @@ package web
 
 import (
 	"fmt"
+	"io"
+	"net/http"
+
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/moshebe/gebug/pkg/render"
 	"github.com/pkg/errors"
-	"io"
-	"net/http"
 )
 
 const (
