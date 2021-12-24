@@ -39,7 +39,7 @@ package:
 	cp -r conf $(OUTDIR)
 
 check:
-	go get honnef.co/go/tools/cmd/staticcheck
+	go install honnef.co/go/tools/cmd/staticcheck@latest
 	staticcheck ./...
 
 clean:

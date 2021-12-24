@@ -21,7 +21,7 @@ func TestConfig_Load(t *testing.T) {
 name: my-app
 output_binary: /app
 build_command: go build -o {{.output_binary}} -gcflags="all=-N-l"
-runtime_image: golang:1.15.2
+runtime_image: golang:1.17
 run_command: '{{.output_binary}}'
 debugger_port: 40000
 expose_ports:
@@ -32,7 +32,7 @@ expose_ports:
 				OutputBinaryPath: "/app",
 				BuildCommand:     `go build -o /app -gcflags="all=-N-l"`,
 				RunCommand:       "/app",
-				RuntimeImage:     "golang:1.15.2",
+				RuntimeImage:     "golang:1.17",
 				DebuggerPort:     40000,
 				ExposePorts:      []string{"8080:8080"},
 			},
@@ -43,7 +43,7 @@ expose_ports:
 name: my-app
 output_binary: /app
 build_command: go build -o {{.output_binary}} -gcflags="all=-N-l"
-runtime_image: golang:1.15.2
+runtime_image: golang:1.17
 run_command: '{{.output_binary}}'
 debugger_port: 40000
 expose_ports:
@@ -54,7 +54,7 @@ expose_ports:
 				OutputBinaryPath: "/app",
 				BuildCommand:     `go build -o /app -gcflags="all=-N-l"`,
 				RunCommand:       "/app",
-				RuntimeImage:     "golang:1.15.2",
+				RuntimeImage:     "golang:1.17",
 				DebuggerPort:     40000,
 				ExposePorts:      []string{"8080:8080"},
 			},
@@ -123,7 +123,7 @@ func TestConfig_Write(t *testing.T) {
 				BuildCommand:     "go build -o /app -gcflags=\"all=-N-l\"",
 				BuildDir:         "/app",
 				RunCommand:       "/app",
-				RuntimeImage:     "golang:1.15.2",
+				RuntimeImage:     "golang:1.17",
 				DebuggerPort:     40000,
 				DebuggerEnabled:  true,
 				ExposePorts:      []string{"8080", "8081:8081"},
@@ -133,7 +133,7 @@ output_binary: /app
 build_command: go build -o /app -gcflags="all=-N-l"
 build_dir: /app
 run_command: /app
-runtime_image: golang:1.15.2
+runtime_image: golang:1.17
 debugger_enabled: true
 debugger_port: 40000
 expose_ports:

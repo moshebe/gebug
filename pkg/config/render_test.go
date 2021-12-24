@@ -12,7 +12,7 @@ var mockConfig = &Config{
 	OutputBinaryPath: "/app",
 	BuildCommand:     "go build",
 	RunCommand:       "/app",
-	RuntimeImage:     "golang:1.15.2",
+	RuntimeImage:     "golang:1.17",
 	DebuggerEnabled:  false,
 	DebuggerPort:     0,
 	ExposePorts:      []string{"8080"},
@@ -88,7 +88,7 @@ func TestConfig_RenderDockerfile(t *testing.T) {
 	err := mockConfig.RenderDockerfile(out)
 	assert.NoError(t, err)
 	assert.Equal(t,
-		`FROM golang:1.15.2
+		`FROM golang:1.17
 RUN go get github.com/githubnemo/CompileDaemon
 RUN go get github.com/go-delve/delve/cmd/dlv
 WORKDIR /src

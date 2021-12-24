@@ -5,7 +5,7 @@ pre_run_commands:
   - ls
 build_command: go build -o {{.output_binary}}
 build_dir: /src
-runtime_image: golang:1.15.2
+runtime_image: golang:1.17
 run_command: '{{.output_binary}}'
 debugger_port: 40000
 debugger_enabled: false
