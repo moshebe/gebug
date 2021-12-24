@@ -27,7 +27,7 @@ func LoadOrDefault(workDir string) (*config.Config, bool) {
 		OutputBinaryPath: "/app",
 		BuildCommand:     `go build -o {{.output_binary}}`,
 		RunCommand:       `{{.output_binary}}`,
-		RuntimeImage:     "golang:1.15.2",
+		RuntimeImage:     "golang:1.17",
 	}
 
 	configFilePath := config.FilePath(workDir, config.Path)

@@ -1,10 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"io"
 	"path"
 	"reflect"
-	"fmt"
 	"strings"
 
 	"github.com/moshebe/gebug/pkg/render"

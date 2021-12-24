@@ -33,13 +33,8 @@ coverage:
 	echo -n > coverage.txt
 	for pkg in $(PKGS) ; do go test -coverprofile=profile.out -covermode=atomic $${pkg} && cat profile.out >> coverage.txt; done
 
-package:
-	mkdir -p $(OUTDIR)/bin
-	mv bfe  $(OUTDIR)/bin
-	cp -r conf $(OUTDIR)
-
 check:
-	go get honnef.co/go/tools/cmd/staticcheck
+	go install honnef.co/go/tools/cmd/staticcheck@latest
 	staticcheck ./...
 
 clean:

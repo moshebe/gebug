@@ -22,7 +22,7 @@ Configurations
 	output_binary		- output binary artifact inside the runtime container (default: "/app")
 	build_command		- build command inside the runtime container (default: "go build -o {{.output_binary}}")
 	run_command		- run command, probably most of the time will just be the binary artifact path (default: "{.output_binary}}")
-	runtime_image 		- base Docker image for the runtime container (default: "golang:1.15.2")
+	runtime_image 		- base Docker image for the runtime container (default: "golang:1.17")
 	debugger_enabled 	- whether to enable delve debugger inside the container or just use hot-reload (default: false)
 	debugger_port 		- delve debugger listen port, relevant only if debugger_enabled was set (default: 40000)
 	expose_ports 		- list of ports to expose inside the container (default: [])
