@@ -7,7 +7,6 @@ import (
 
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/moshebe/gebug/pkg/render"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -38,21 +37,21 @@ func RenderDockerCompose(options *Opts, writer io.Writer) error {
 	}
 
 	if options.ImageName == "" {
-		return errors.New("invalid image name")
+		return fmt.Errorf("invalid image name")
 	}
 
 	if options.Location == "" {
-		return errors.New("invalid project location")
+		return fmt.Errorf("invalid project location")
 	}
 
 	out, err := render.Render(dockerComposeTemplate, options)
 	if err != nil {
-		return errors.WithMessage(err, "render docker-compose template")
+		return fmt.Errorf("render docker-compose template: %w", err)
 	}
 
 	_, err = writer.Write([]byte(out))
 	if err != nil {
-		return errors.WithMessage(err, "write generated docker-compose")
+		return fmt.Errorf("write generated docker-compose: %w", err)
 	}
 
 	return nil

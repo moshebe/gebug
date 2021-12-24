@@ -2,11 +2,11 @@ package setup
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path"
 	"regexp"
 
-	"github.com/pkg/errors"
 	"github.com/spf13/afero"
 )
 
@@ -34,16 +34,16 @@ func (v VsCode) GebugInstalled() (bool, error) {
 		return false, err
 	}
 	if !detected {
-		return false, errors.New("vscode was not detected in this workspace")
+		return false, fmt.Errorf("vscode was not detected in this workspace")
 	}
 	launchConfigPath := path.Join(v.WorkDir, vscodeDirName, vscodeLaunchFileName)
 	launchContent, err := afero.ReadFile(AppFs, launchConfigPath)
 	if err != nil {
-		return false, errors.WithMessage(err, "read vscode launch.json file")
+		return false, fmt.Errorf("read vscode launch.json file: %w", err)
 	}
 	installed, err := v.installedInLaunchConfig(launchContent)
 	if err != nil {
-		return false, errors.WithMessage(err, "check if installed in launch.json")
+		return false, fmt.Errorf("check if installed in launch.json: %w", err)
 	}
 
 	return installed, nil
@@ -69,7 +69,7 @@ func (v VsCode) installedInLaunchConfig(in []byte) (bool, error) {
 
 	err := json.Unmarshal(v.removeComments(in), &launchConfig)
 	if err != nil {
-		return false, errors.WithMessage(err, "unmarshal no comments input")
+		return false, fmt.Errorf("unmarshal no comments input: %w", err)
 	}
 	for _, c := range launchConfig.Configurations {
 		if c.Name != gebugLaunchName {
@@ -108,13 +108,13 @@ func (v VsCode) editLaunchConfig(enabled bool, input []byte) ([]byte, error) {
 	if len(input) > 0 {
 		err := json.Unmarshal(v.removeComments(input), &launchConfig)
 		if err != nil {
-			return nil, errors.WithMessage(err, "unmarshal launch.json")
+			return nil, fmt.Errorf("unmarshal launch.json: %w", err)
 		}
 
 		for _, c := range launchConfig.Configurations {
 			item, ok := c.(map[string]interface{})
 			if !ok {
-				return nil, errors.New("parse launch configuration")
+				return nil, fmt.Errorf("parse launch configuration")
 			}
 			if item["name"] == gebugLaunchName {
 				continue
@@ -131,7 +131,7 @@ func (v VsCode) editLaunchConfig(enabled bool, input []byte) ([]byte, error) {
 	launchConfig.Configurations = newConfig
 	output, err := json.MarshalIndent(launchConfig, "", "\t")
 	if err != nil {
-		return nil, errors.WithMessage(err, "marshal new configuration")
+		return nil, fmt.Errorf("marshal new configuration: %w", err)
 	}
 
 	return output, nil
@@ -148,7 +148,7 @@ func (v VsCode) setEnabled(enabled bool) error {
 	file, err := AppFs.Stat(launchFilePath)
 	if err != nil {
 		if !os.IsNotExist(err) {
-			return errors.WithMessage(err, "access launch.json config file")
+			return fmt.Errorf("access launch.json config file: %w", err)
 		}
 
 		// no file is ok in case of disable
@@ -162,17 +162,17 @@ func (v VsCode) setEnabled(enabled bool) error {
 
 	input, err := afero.ReadFile(AppFs, launchFilePath)
 	if err != nil {
-		return errors.WithMessage(err, "read launch.json file")
+		return fmt.Errorf("read launch.json file: %w", err)
 	}
 
 	output, err := v.editLaunchConfig(enabled, input)
 	if err != nil {
-		return errors.WithMessage(err, "edit configuration to set enabled mode")
+		return fmt.Errorf("edit configuration to set enabled mode: %w", err)
 	}
 
 	err = afero.WriteFile(AppFs, launchFilePath, output, perm)
 	if err != nil {
-		return errors.WithMessage(err, "write configuration to launch.json")
+		return fmt.Errorf("write configuration to launch.json: %w", err)
 	}
 
 	return nil

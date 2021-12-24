@@ -1,22 +1,22 @@
 package config
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/iancoleman/strcase"
 	"github.com/moshebe/gebug/pkg/render"
-	"github.com/pkg/errors"
 )
 
 func (c *Config) renderedWrite(template string, writer io.Writer) error {
 	out, err := render.Render(template, c)
 	if err != nil {
-		return errors.WithMessage(err, "render template")
+		return fmt.Errorf("render template: %w", err)
 	}
 
 	_, err = writer.Write([]byte(out))
 	if err != nil {
-		return errors.WithMessage(err, "write generated configuration")
+		return fmt.Errorf("write generated configuration: %w", err)
 	}
 
 	return nil

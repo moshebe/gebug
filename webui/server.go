@@ -172,7 +172,7 @@ func main() {
 
 	location := os.Getenv(locationEnvName)
 	if location == "" {
-		logger.Sugar().Fatalf("Could not find project location, make sure '%s' was set correctly", locationEnvName)
+		logger.Sugar().Fatalf("Could not find project location, make sure %q was set correctly", locationEnvName)
 	}
 	s := &server{
 		port:     defaultServerPort,

@@ -1,11 +1,11 @@
 package validate
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
 	valid "github.com/asaskevich/govalidator"
-	"github.com/pkg/errors"
 )
 
 // Validator defines the behaviour validation behaviour
@@ -20,7 +20,7 @@ type NonEmptyValidator struct{}
 func (v NonEmptyValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
-		return errors.New("empty command")
+		return fmt.Errorf("empty command")
 	}
 
 	return nil
@@ -35,11 +35,11 @@ type RegexValidator struct {
 func (v RegexValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
-		return errors.New("empty input")
+		return fmt.Errorf("empty input")
 	}
 
 	if !valid.Matches(input, v.Pattern) {
-		return errors.New("input does not matches pattern")
+		return fmt.Errorf("input does not matches pattern")
 	}
 
 	return nil
@@ -55,16 +55,16 @@ type NumericRangeValidator struct {
 func (v NumericRangeValidator) Validate(input string) error {
 	input = strings.TrimSpace(input)
 	if len(input) <= 0 {
-		return errors.New("empty input")
+		return fmt.Errorf("empty input")
 	}
 
 	num, err := strconv.Atoi(input)
 	if err != nil {
-		return errors.New("convert input to a number")
+		return fmt.Errorf("convert input to a number")
 	}
 
 	if !valid.InRange(num, v.Min, v.Max) {
-		return errors.Errorf("input is not in range (%d|%d)", v.Min, v.Max)
+		return fmt.Errorf("input is not in range (%d|%d)", v.Min, v.Max)
 	}
 
 	return nil

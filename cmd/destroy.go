@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"path"
 
@@ -8,7 +9,6 @@ import (
 	"github.com/moshebe/gebug/pkg/config"
 	"github.com/moshebe/gebug/pkg/osutil"
 	"github.com/moshebe/gebug/pkg/setup"
-	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -39,7 +39,7 @@ var destroyCmd = &cobra.Command{
 		for name, ide := range setup.SupportedIdes(workDir, 0) {
 			detected, err := ide.Detected()
 			if err != nil {
-				resultErr = multierror.Append(resultErr, errors.WithMessagef(err, "detect IDE existence of '%s'", name))
+				resultErr = multierror.Append(resultErr, fmt.Errorf("detect IDE existence of %q: %w", name, err))
 				continue
 			}
 
@@ -49,7 +49,7 @@ var destroyCmd = &cobra.Command{
 
 			err = ide.Disable()
 			if err != nil {
-				resultErr = multierror.Append(resultErr, errors.WithMessagef(err, "disable IDE '%s'", name))
+				resultErr = multierror.Append(resultErr, fmt.Errorf("disable IDE %q: %w", name, err))
 			}
 		}
 

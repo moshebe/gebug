@@ -1,9 +1,9 @@
 package setup
 
 import (
+	"fmt"
 	"path"
 
-	"github.com/pkg/errors"
 	"github.com/spf13/afero"
 )
 
@@ -33,7 +33,7 @@ type baseIde struct {
 func (i baseIde) detected(ideDirName string) (bool, error) {
 	detected, err := afero.DirExists(AppFs, path.Join(i.WorkDir, ideDirName))
 	if err != nil {
-		return false, errors.WithMessage(err, "check if directory exists")
+		return false, fmt.Errorf("check if directory exists: %w", err)
 	}
 
 	return detected, nil

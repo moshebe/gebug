@@ -8,7 +8,6 @@ import (
 	"github.com/moshebe/gebug/pkg/config"
 	"github.com/moshebe/gebug/pkg/setup"
 	"github.com/moshebe/gebug/pkg/validate"
-	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )
 
@@ -26,7 +25,7 @@ type PromptDebuggerOptions struct {
 func (p *PromptDebuggerOptions) handleIde(name string, ide setup.Ide) error {
 	detected, err := ide.Detected()
 	if err != nil {
-		return errors.WithMessage(err, "detect IDE in working directory")
+		return fmt.Errorf("detect IDE in working directory: %w", err)
 	}
 
 	if !detected {
@@ -35,7 +34,7 @@ func (p *PromptDebuggerOptions) handleIde(name string, ide setup.Ide) error {
 
 	installed, err := ide.GebugInstalled()
 	if err != nil {
-		return errors.WithMessage(err, "check if Gebug is configured in IDE")
+		return fmt.Errorf("check if Gebug is configured in IDE: %w", err)
 	}
 
 	if installed {
@@ -44,7 +43,7 @@ func (p *PromptDebuggerOptions) handleIde(name string, ide setup.Ide) error {
 	}
 
 	confirmPrompt := &promptui.Prompt{
-		Label:     fmt.Sprintf("IDE detected! would you like to configure Gebug in '%s'?", name),
+		Label:     fmt.Sprintf("IDE detected! would you like to configure Gebug in %q?", name),
 		IsConfirm: true,
 	}
 
@@ -53,7 +52,7 @@ func (p *PromptDebuggerOptions) handleIde(name string, ide setup.Ide) error {
 		zap.L().Debug("Configuring IDE", zap.String("name", name), zap.String("workDir", p.workDir))
 		err = ide.Enable()
 		if err != nil {
-			return errors.WithMessage(err, "enable Gebug debugger configurations")
+			return fmt.Errorf("enable Gebug debugger configurations: %w", err)
 		}
 		fmt.Printf("✔  Gebug configured in %s debugger successfully!\n", name)
 	}

@@ -42,13 +42,13 @@ var runCmd = &cobra.Command{
 		}
 		for _, file := range requiredFiles {
 			if !osutil.FileExists(file) {
-				zap.S().Fatalf("missing required file: '%s', please make sure you have generated it...", file)
+				zap.S().Fatalf("missing required file: %q, please make sure you have generated it...", file)
 			}
 		}
 		prerequisites := []string{"docker", "docker-compose"}
 		for _, bin := range prerequisites {
 			if !osutil.CommandExists(bin) {
-				zap.S().Fatalf("'%s' was not found, please make sure it is installed correctly...", bin)
+				zap.S().Fatalf("%q was not found, please make sure it is installed correctly...", bin)
 			}
 		}
 

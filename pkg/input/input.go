@@ -1,13 +1,13 @@
 package input
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
 
 	"github.com/moshebe/gebug/pkg/config"
 	"github.com/moshebe/gebug/pkg/osutil"
-	"github.com/pkg/errors"
 	"github.com/spf13/afero"
 	"go.uber.org/zap"
 )
@@ -52,14 +52,14 @@ func save(workDir string, currentConfig *config.Config) error {
 		if !osutil.FileExists(path.Join(workDir, config.RootDir)) {
 			err := os.Mkdir(path.Join(workDir, config.RootDir), 0755)
 			if err != nil {
-				return errors.WithMessage(err, "create config directory")
+				return fmt.Errorf("create config directory: %w", err)
 			}
 		}
 	}
 
 	configFile, err := os.Create(config.FilePath(workDir, config.Path))
 	if err != nil {
-		return errors.WithMessage(err, "create config file")
+		return fmt.Errorf("create config file: %w", err)
 	}
 	defer func() {
 		_ = configFile.Close()
@@ -67,7 +67,7 @@ func save(workDir string, currentConfig *config.Config) error {
 
 	err = currentConfig.Write(configFile)
 	if err != nil {
-		return errors.WithMessage(err, "write configurations to config file")
+		return fmt.Errorf("write configurations to config file: %w", err)
 	}
 
 	return nil
@@ -84,7 +84,7 @@ func Setup(currentConfig *config.Config, prompts []ConfigPrompt, workDir string)
 
 	err := save(workDir, currentConfig)
 	if err != nil {
-		return errors.WithMessage(err, "save configuration")
+		return fmt.Errorf("save configuration: %w", err)
 	}
 
 	return nil

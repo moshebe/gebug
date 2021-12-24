@@ -4,10 +4,10 @@ import (
 	"io"
 	"path"
 	"reflect"
+	"fmt"
 	"strings"
 
 	"github.com/moshebe/gebug/pkg/render"
-	"github.com/pkg/errors"
 	"github.com/spf13/afero"
 	"gopkg.in/yaml.v2"
 )
@@ -47,12 +47,12 @@ func Load(input []byte) (*Config, error) {
 	c := &Config{}
 	err := yaml.Unmarshal(input, c)
 	if err != nil {
-		return nil, errors.WithMessage(err, "unmarshal configuration")
+		return nil, fmt.Errorf("unmarshal configuration: %w", err)
 	}
 
 	err = c.render()
 	if err != nil {
-		return nil, errors.WithMessage(err, "render configuration")
+		return nil, fmt.Errorf("render configuration: %w", err)
 	}
 
 	c.BuildCommand = updateBuildCommand(c.BuildCommand, c.DebuggerEnabled)
@@ -76,11 +76,11 @@ func ResolvePath(projectPath string) string {
 func (c Config) Write(writer io.Writer) error {
 	out, err := yaml.Marshal(c)
 	if err != nil {
-		return errors.WithMessage(err, "marshal configuration")
+		return fmt.Errorf("marshal configuration: %w", err)
 	}
 	_, err = writer.Write(out)
 	if err != nil {
-		return errors.WithMessage(err, "write marshalled configuration")
+		return fmt.Errorf("write marshalled configuration: %w", err)
 	}
 	return nil
 }
@@ -106,7 +106,7 @@ func (c *Config) render() error {
 		rawValue := valueElement.Field(i).String()
 		newValue, err := render.Render(rawValue, values)
 		if err != nil {
-			return errors.Errorf("unable to render value: '%s'", rawValue)
+			return fmt.Errorf("unable to render value %q: %w", rawValue, err)
 		}
 		valueElement.Field(i).SetString(newValue)
 	}

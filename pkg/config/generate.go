@@ -1,10 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"io"
 	"path"
 
-	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )
 
@@ -32,7 +32,7 @@ func createConfigFile(fileName string, workDir string, renderFunc func(io.Writer
 	zap.L().Debug("Generating config file", zap.String("path", filePath))
 	file, err := AppFs.Create(filePath)
 	if err != nil {
-		return errors.WithMessagef(err, "create file '%s'", fileName)
+		return fmt.Errorf("create file %q: %w", fileName, err)
 	}
 	defer func() {
 		err := file.Close()
@@ -43,7 +43,7 @@ func createConfigFile(fileName string, workDir string, renderFunc func(io.Writer
 
 	err = renderFunc(file)
 	if err != nil {
-		return errors.WithMessagef(err, "generate file content: '%s'", fileName)
+		return fmt.Errorf("generate file content %q: %w", fileName, err)
 	}
 
 	return nil

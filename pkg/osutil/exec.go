@@ -1,7 +1,7 @@
 package osutil
 
 import (
-	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -14,11 +14,11 @@ import (
 // See https://golang.org/pkg/os/exec/#Cmd.Run for return values
 func RunCommand(command string) error {
 	if len(command) < 1 {
-		return errors.New("invalid command")
+		return fmt.Errorf("invalid command")
 	}
 	parts := strings.Split(command, " ")
 
-	zap.S().Debugf("Run command: '%s'", command)
+	zap.S().Debugf("Run command: %q", command)
 	return execCommand(parts[0], parts[1:]...)
 }
 

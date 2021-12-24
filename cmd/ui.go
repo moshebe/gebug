@@ -64,7 +64,7 @@ var uiCmd = &cobra.Command{
 		prerequisites := []string{"docker", "docker-compose"}
 		for _, bin := range prerequisites {
 			if !osutil.CommandExists(bin) {
-				zap.S().Fatalf("'%s' was not found, please make sure it is installed correctly...", bin)
+				zap.S().Fatalf("%q was not found, please make sure it is installed correctly...", bin)
 			}
 		}
 

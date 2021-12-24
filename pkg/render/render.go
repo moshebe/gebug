@@ -2,9 +2,8 @@ package render
 
 import (
 	"bytes"
+	"fmt"
 	"text/template"
-
-	"github.com/pkg/errors"
 )
 
 // Render builds a string
@@ -14,13 +13,13 @@ import (
 func Render(rawTemplate string, data interface{}) (string, error) {
 	t, err := template.New("").Parse(rawTemplate)
 	if err != nil {
-		return "", errors.WithMessage(err, "parse template")
+		return "", fmt.Errorf("parse template: %w", err)
 	}
 
 	var out bytes.Buffer
 	err = t.Execute(&out, data)
 	if err != nil {
-		return "", errors.WithMessage(err, "render template")
+		return "", fmt.Errorf("render template: %w", err)
 	}
 
 	return out.String(), nil
