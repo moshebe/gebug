@@ -4,24 +4,23 @@ import (
 	"testing"
 
 	"github.com/spf13/afero"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestIde_detected(t *testing.T) {
 	AppFs = afero.NewMemMapFs()
-	assertion := assert.New(t)
 
 	createdDirName := ".my_ide"
 	err := AppFs.Mkdir(createdDirName, 0777)
-	assertion.NoError(err)
+	require.NoError(t, err)
 
 	_, err = afero.ReadDir(AppFs, createdDirName)
-	assertion.NoError(err)
+	require.NoError(t, err)
 
 	_, err = afero.ReadDir(AppFs, ".not-exists")
-	assertion.Error(err)
+	require.Error(t, err)
 }
 
 func TestIde_SupportedIdes(t *testing.T) {
-	assert.NotEmpty(t, SupportedIdes(".", 0))
+	require.NotEmpty(t, SupportedIdes(".", 0))
 }
