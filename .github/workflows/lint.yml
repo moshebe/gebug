@@ -3,14 +3,10 @@ on: push
 
 jobs:
   lint:
-    strategy:
-      matrix:
-        goVer: [1.12 1.13 1.14]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: docker://golangci/golangci-lint:v1.23.8
+      - uses: golangci/golangci-lint-action@v2
+        name: golangci-lint
         with:
-          args: golangci-lint run
-        env:
-          CGO_ENABLED: 0
+          version: v1.43.0

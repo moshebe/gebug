@@ -6,10 +6,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        goVer: [1.13, 1.14]
+        goVer: [1.17]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.goVer }}
       - run: go test -cover ./...
