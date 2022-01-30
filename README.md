@@ -12,7 +12,7 @@ A tool that makes debugging of Dockerized Go applications super easy by enabling
 ---
 # Installing
 ```
-go get -u github.com/moshebe/gebug
+go install github.com/moshebe/gebug@latest
 ```
 
 # Usage
