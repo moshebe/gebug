@@ -10,7 +10,7 @@
   "dependencies": {
     "@braid/vue-formulate": "^2.5.3",
     "@vue/composition-api": "^1.4.3",
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.20.3",
     "vue": "^2.6.14",
