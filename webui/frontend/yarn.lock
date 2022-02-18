@@ -1568,10 +1568,10 @@
   optionalDependencies:
     prettier "^1.18.2"
 
-"@vue/composition-api@^1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.4.5.tgz#a15f5407708a6566ade81965476218dfaa4faa29"
-  integrity sha512-2Esgcc0EGBqyck4b/yrP2VnGmMr6cPYAE4nF3StIzP8+umNAbRZqBJDc6AhE58whPRt3lHAPf83eppgW7a2dUg==
+"@vue/composition-api@^1.4.3":
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.4.6.tgz#886c35221cd7c6f55272543a121240e8d3a1306c"
+  integrity sha512-UP359OJ0G0Zli603/i9fhXFmNtZUSrypSFyqClMxizp8ezlaMK2GCmHgy3qyrRnO/xjcDAx09vvXPwNFtxHPtQ==
 
 "@vue/eslint-config-typescript@^5.0.2":
   version "5.1.0"
@@ -7490,10 +7490,10 @@ sass-loader@^12.4.0:
     klona "^2.0.4"
     neo-async "^2.6.2"
 
-sass@^1.49.0:
-  version "1.49.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.49.0.tgz#65ec1b1d9a6bc1bae8d2c9d4b392c13f5d32c078"
-  integrity sha512-TVwVdNDj6p6b4QymJtNtRS2YtLJ/CqZriGg0eIAbAKMlN8Xy6kbv33FsEZSF7FufFFM705SQviHjjThfaQ4VNw==
+sass@^1.49.8:
+  version "1.49.8"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.49.8.tgz#9bbbc5d43d14862db07f1c04b786c9da9b641828"
+  integrity sha512-NoGOjvDDOU9og9oAxhRnap71QaTjjlzrvLnKecUJ3GxhaQBrV6e7gPuSPF28u1OcVAArVojPAe4ZhOXwwC4tGw==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
