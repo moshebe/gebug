@@ -1568,10 +1568,10 @@
   optionalDependencies:
     prettier "^1.18.2"
 
-"@vue/composition-api@^1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.4.5.tgz#a15f5407708a6566ade81965476218dfaa4faa29"
-  integrity sha512-2Esgcc0EGBqyck4b/yrP2VnGmMr6cPYAE4nF3StIzP8+umNAbRZqBJDc6AhE58whPRt3lHAPf83eppgW7a2dUg==
+"@vue/composition-api@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.4.7.tgz#f213d10fc37e2ccffa4cf37be91b4af0594645b7"
+  integrity sha512-IaYlkcVTDzdVNVJNhpi3k0f5jWoLg4GJduO1pxJzItKCfGtaHAc3mxvxYc6bbsPzZ1DkW2MYJYmiiAfaYbmhIg==
 
 "@vue/eslint-config-typescript@^5.0.2":
   version "5.1.0"
