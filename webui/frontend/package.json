@@ -22,8 +22,13 @@
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
+<<<<<<< HEAD
     "@typescript-eslint/parser": "^5.12.1",
     "@vue/cli-plugin-babel": "~4.5.15",
+=======
+    "@typescript-eslint/parser": "^5.10.1",
+    "@vue/cli-plugin-babel": "~5.0.1",
+>>>>>>> dcec0f1e22c028bc8f15b9804a44a466b9a0cc9a
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-typescript": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
