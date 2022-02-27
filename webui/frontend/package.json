@@ -40,8 +40,13 @@
     "mutationobserver-shim": "^0.3.7",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
+<<<<<<< HEAD
     "sass": "^1.49.9",
     "sass-loader": "^12.4.0",
+=======
+    "sass": "^1.49.0",
+    "sass-loader": "^12.6.0",
+>>>>>>> de37ff93c0403e5b50c2e6af9acae458404e4fe1
     "typescript": "~4.5.5",
     "vue-cli-plugin-bootstrap-vue": "~0.8.2",
     "vue-template-compiler": "^2.6.14"
