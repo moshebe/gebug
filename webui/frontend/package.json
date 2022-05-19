@@ -13,7 +13,7 @@
     "axios": "^0.27.2",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.22.5",
-    "vue": "^3.2.33",
+    "vue": "^3.2.34",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.1.2",
     "vuelidate": "^0.7.7",
