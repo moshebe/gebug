@@ -3,12 +3,8 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/moshebe/gebug/version"
 	"github.com/spf13/cobra"
-)
-
-var (
-	Tag    string
-	Commit string
 )
 
 func init() {
@@ -20,16 +16,6 @@ var versionCmd = &cobra.Command{
 	Short: "Gebug version",
 	Long:  "Print the version number of Gebug",
 	Run: func(cmd *cobra.Command, args []string) {
-		var v string
-		switch {
-		case Tag != "":
-			v = Tag
-		case Commit != "":
-			v = "dev-" + Commit
-		default:
-			v = "development"
-		}
-
-		fmt.Println("version: ", v)
+		fmt.Println(version.Name())
 	},
 }

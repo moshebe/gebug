@@ -1,18 +1,21 @@
+# Makefile params
+SHELL             = /bin/bash -o pipefail
+
 WORKROOT := $(shell pwd)
 OUTDIR   := $(WORKROOT)/output
-
-export PATH        := $(shell go env GOPATH)/bin:$(PATH)
-export GO111MODULE := on
 
 GOARCH            = amd64
 GOOS              ?= $(shell go env GOOS)
 GOPATH            ?= $(shell go env GOPATH)
 COMMIT            ?= $(shell git rev-parse HEAD)
 BRANCH            ?= $(shell git rev-parse --abbrev-ref HEAD)
-VERSION           ?= $(GITHUB_ACTION_VERSION_TAG)
+BUILD_DATE        ?= $(shell date -u +"%Y-%m-%d")
+VERSION           ?= $(shell git describe --long --tags)
 BASENAME          ?= gebug
 BINARY            ?= ${BASENAME}
-VERSION_PKG   	  = github.com/moshebe/gebug/cmd
+VERSION_PKG   	  = github.com/moshebe/gebug/version
+LDFLAGS	          = -ldflags \
+					"-X ${VERSION_PKG}.Version=${VERSION} -X ${VERSION_PKG}.Revision=${COMMIT} -X ${VERSION_PKG}.Branch=${BRANCH}"
 
 STATICCHECK  := staticcheck
 
@@ -29,9 +32,8 @@ PKGS := $(shell go list ./...)
 all: compile package
 
 compile: test build
-.PHONY: build
 build:
-	go build -ldflags "-X ${VERSION_FILE}.Commit=${COMMIT} -X ${VERSION_FILE}.Tag=${VERSION}"
+	go build ${LDFLAGS}
 
 .PHONY: buildall
 	$(MAKE) build GOOS=windows BINARY=${BINARY}-windows-${GOARCH}.exe
@@ -54,7 +56,7 @@ package:
 	cp -r conf $(OUTDIR)
 
 check:
-	go install honnef.co/go/tools/cmd/staticcheck
+	go install honnef.co/go/tools/cmd/staticcheck@latest
 	staticcheck ./...
 
 clean:
@@ -63,4 +65,4 @@ clean:
 	rm -rf $(WORKROOT)/.gebug
 	rm -rf $(GOPATH)/pkg/linux_amd64
 
-.PHONY: all compile test package clean build
+.PHONY: all compile test package clean build buildall

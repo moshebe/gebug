@@ -1,0 +1,38 @@
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+builds:
+  - env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -X github.com/moshebe/gebug/version.Version={{.Version}}
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+brews:
+  - name: gebug
+    homepage: https://github.com/moshebe/gebug
+    tap:
+      owner: moshebe
+      name: homebrew-pkg
