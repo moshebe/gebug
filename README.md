@@ -10,8 +10,14 @@ A tool that makes debugging of Dockerized Go applications super easy by enabling
 [![Go Report Card](https://goreportcard.com/badge/github.com/moshebe/gebug)](https://goreportcard.com/report/github.com/moshebe/gebug)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ---
-# Installing
+# Installation
+### [Homebrew](https://brew.sh/) (Linux/macOS)
+```shell
+brew install moshebe/pkg/gebug
 ```
+### [Go](https://golang.org) (Linux/Windows/macOS/any other platform supported by Go)
+If you have Go 1.16+, you can install latest released version of `gebug` directly from source by running:
+```shell
 go install github.com/moshebe/gebug@latest
 ```
 
