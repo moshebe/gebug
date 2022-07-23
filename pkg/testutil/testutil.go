@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // RunTestData runs all the tests resides in the `testdata` directory and their input/golden file has the following prefix
@@ -24,12 +25,11 @@ func RunTestData(t *testing.T, prefix string, check func(t *testing.T, input, go
 		}
 
 		t.Run(name, func(t *testing.T) {
-			assertion := assert.New(t)
 			filePath := path.Join(baseDir, name)
 			input, err := ioutil.ReadFile(filePath)
-			assertion.NoError(err)
+			require.NoError(t, err)
 			golden, err := ioutil.ReadFile(strings.TrimSuffix(filePath, ".in") + ".golden")
-			assertion.NoError(err)
+			require.NoError(t, err)
 			check(t, bytes.NewBuffer(input), bytes.NewBuffer(golden))
 		})
 	}

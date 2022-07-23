@@ -9,7 +9,7 @@ import (
 
 	"github.com/moshebe/gebug/pkg/testutil"
 	"github.com/spf13/afero"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var mockVsCode = &VsCode{baseIde{
@@ -29,14 +29,13 @@ func TestVsCode_Detected(t *testing.T) {
 		for i, test := range tests {
 			t.Run(strconv.Itoa(i), func(t *testing.T) {
 				AppFs = afero.NewMemMapFs()
-				assertion := assert.New(t)
 				if test.create {
 					err := AppFs.Mkdir(vscodeDirName, 0777)
-					assertion.NoError(err)
+					require.NoError(t, err)
 				}
 				got, err := mockVsCode.Detected()
-				assertion.NoError(err)
-				assertion.Equal(test.expected, got)
+				require.NoError(t, err)
+				require.Equal(t, test.expected, got)
 			})
 		}
 	}
@@ -71,18 +70,17 @@ func TestVsCode_installedInLaunchConfig(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			assertion := assert.New(t)
 			filePath := path.Join("testdata", test.name+".in")
 			input, err := ioutil.ReadFile(filePath)
-			assertion.NoError(err)
+			require.NoError(t, err)
 
 			got, err := mockVsCode.installedInLaunchConfig(bytes.NewBuffer(input).Bytes())
 			if test.wantErr {
-				assertion.Error(err)
+				require.Error(t, err)
 			} else {
-				assertion.NoError(err)
+				require.NoError(t, err)
 			}
-			assertion.Equal(test.expected, got)
+			require.Equal(t, test.expected, got)
 		})
 	}
 }
@@ -117,39 +115,37 @@ func TestVsCode_GebugInstalled(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			AppFs = afero.NewMemMapFs()
-			assertion := assert.New(t)
 			filePath := path.Join("testdata", test.name+".in")
 			input, err := ioutil.ReadFile(filePath)
-			assertion.NoError(err)
+			require.NoError(t, err)
 
 			err = AppFs.Mkdir(vscodeDirName, 0777)
-			assertion.NoError(err)
+			require.NoError(t, err)
 			err = afero.WriteFile(AppFs, mockVsCode.launchConfigFilePath(), input, 0777)
-			assertion.NoError(err)
+			require.NoError(t, err)
 			got, err := mockVsCode.GebugInstalled()
 			if test.wantErr {
-				assertion.Error(err)
+				require.Error(t, err)
 			} else {
-				assertion.NoError(err)
+				require.NoError(t, err)
 			}
-			assertion.Equal(test.expected, got)
+			require.Equal(t, test.expected, got)
 		})
 	}
 }
 
 func testEnableHelper(t *testing.T, input, golden *bytes.Buffer, f func() error) {
-	assertion := assert.New(t)
 	launchFilePath := mockVsCode.launchConfigFilePath()
 	err := afero.WriteFile(AppFs, launchFilePath, input.Bytes(), 0777)
-	assertion.NoError(err)
+	require.NoError(t, err)
 
 	err = f()
-	assertion.NoError(err)
+	require.NoError(t, err)
 
 	got, err := afero.ReadFile(AppFs, launchFilePath)
-	assertion.NoError(err)
+	require.NoError(t, err)
 
-	assertion.JSONEq(golden.String(), string(got))
+	require.JSONEq(t, golden.String(), string(got))
 }
 
 func TestVsCode_Enable(t *testing.T) {

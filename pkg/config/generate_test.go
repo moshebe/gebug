@@ -4,29 +4,28 @@ import (
 	"testing"
 
 	"github.com/spf13/afero"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestConfig_Generate(t *testing.T) {
 	AppFs = afero.NewMemMapFs()
-	assertion := assert.New(t)
 
 	workDir := "."
 	err := mockConfig.Generate(workDir)
-	assertion.NoError(err)
+	require.NoError(t, err)
 
 	dirExists, err := afero.DirExists(AppFs, RootDir)
-	assertion.NoError(err)
+	require.NoError(t, err)
 	if !dirExists {
 		err = AppFs.Mkdir(RootDir, 0777)
-		assertion.NoError(err)
+		require.NoError(t, err)
 	}
 
 	exists, err := afero.Exists(AppFs, FilePath(workDir, DockerfileName))
-	assertion.NoError(err)
-	assertion.True(exists)
+	require.NoError(t, err)
+	require.True(t, exists)
 
 	exists, err = afero.Exists(AppFs, FilePath(workDir, DockerComposeFileName))
-	assertion.NoError(err)
-	assertion.True(exists)
+	require.NoError(t, err)
+	require.True(t, exists)
 }
