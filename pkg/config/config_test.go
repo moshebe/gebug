@@ -8,6 +8,7 @@ import (
 
 	"github.com/moshebe/gebug/pkg/testutil"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestConfig_Load(t *testing.T) {
@@ -83,15 +84,14 @@ expose_ports:
 }
 
 func testGenerateHelper(t *testing.T, input, golden *bytes.Buffer, generate func(config *Config, writer io.Writer) error) {
-	assertion := assert.New(t)
 	c, err := Load(input.Bytes())
-	assertion.NoError(err)
-	assertion.NotNil(c)
+	require.NoError(t, err)
+	require.NotNil(t, c)
 
 	got := bytes.NewBufferString("")
 	err = generate(c, got)
-	assertion.NoError(err)
-	assertion.Equal(golden.String(), got.String())
+	require.NoError(t, err)
+	require.Equal(t, golden.String(), got.String())
 }
 
 func TestConfig_GenerateDockerfile(t *testing.T) {

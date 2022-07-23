@@ -49,21 +49,20 @@ func TestRenderDockerCompose(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		assertion := require.New(t)
 		got := bytes.NewBufferString("")
 		err := RenderDockerCompose(test.input, got)
 		if test.wantErr {
-			assertion.Error(err)
+			require.Error(t, err)
 			return
 		}
 
-		assertion.NoError(err)
+		require.NoError(t, err)
 
 		goldenPath := filepath.Join("testdata", test.goldenFile+".golden")
 		goldenData, err := ioutil.ReadFile(goldenPath)
-		assertion.NoError(err)
+		require.NoError(t, err)
 
-		assertion.Equal(bytes.NewBuffer(goldenData).String(), got.String())
+		require.Equal(t, bytes.NewBuffer(goldenData).String(), got.String())
 	}
 
 }
