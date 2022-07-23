@@ -73,8 +73,8 @@ networks:
 // RenderDockerfile writes the Dockerfile to writer
 func (c *Config) RenderDockerfile(writer io.Writer) error {
 	return c.renderedWrite(`FROM {{.RuntimeImage}}
-RUN go get github.com/githubnemo/CompileDaemon
-RUN go get github.com/go-delve/delve/cmd/dlv
+RUN go install github.com/githubnemo/CompileDaemon@latest
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
 
 {{- if .PreRunCommands}}{{range .PreRunCommands}}
 RUN {{.}}{{end}}{{end}}

@@ -1,6 +1,6 @@
-FROM golang:1.17
-RUN go get github.com/githubnemo/CompileDaemon
-RUN go get github.com/go-delve/delve/cmd/dlv
+FROM golang:1.18
+RUN go install github.com/githubnemo/CompileDaemon@latest
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
 RUN echo "hello" && echo "world"
 RUN ls
 WORKDIR /src
