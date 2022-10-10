@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.3",
-    "@vue/composition-api": "^1.7.0",
+    "@vue/composition-api": "^1.7.1",
     "axios": "^1.1.2",
     "bootstrap-vue": "^2.22.0",
-    "core-js": "^3.25.5",
-    "vue": "^3.2.39",
+    "core-js": "^3.25.0",
+    "vue": "^3.2.40",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.1.2",
     "vuelidate": "^0.7.7",
@@ -36,7 +36,7 @@
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
     "sass": "^1.55.0",
-    "sass-loader": "^13.0.2",
+    "sass-loader": "^13.1.0",
     "typescript": "~4.8.3",
     "vue-cli-plugin-bootstrap-vue": "~0.8.2",
     "vue-template-compiler": "^2.7.10"
