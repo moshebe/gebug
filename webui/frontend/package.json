@@ -11,7 +11,7 @@
     "@braid/vue-formulate": "^2.5.3",
     "@vue/composition-api": "^1.7.1",
     "axios": "^1.1.2",
-    "bootstrap-vue": "^2.22.0",
+    "bootstrap-vue": "^2.23.0",
     "core-js": "^3.25.0",
     "vue": "^3.2.40",
     "vue-class-component": "^7.2.6",
