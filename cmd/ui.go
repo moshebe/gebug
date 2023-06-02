@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"sync"
 
@@ -44,7 +43,7 @@ var uiCmd = &cobra.Command{
 			projectPath = cwd
 		}
 
-		file, err := ioutil.TempFile("", "gebug-webui-docker-compose.*.yml")
+		file, err := os.CreateTemp("", "gebug-webui-docker-compose.*.yml")
 		if err != nil {
 			zap.L().Fatal("Failed to create temporary file for generating docker-compose", zap.Error(err))
 		}
