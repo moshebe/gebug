@@ -2,7 +2,7 @@ package setup
 
 import (
 	"bytes"
-	"io/ioutil"
+	"os"
 	"path"
 	"strconv"
 	"testing"
@@ -71,7 +71,7 @@ func TestVsCode_installedInLaunchConfig(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			filePath := path.Join("testdata", test.name+".in")
-			input, err := ioutil.ReadFile(filePath)
+			input, err := os.ReadFile(filePath)
 			require.NoError(t, err)
 
 			got, err := mockVsCode.installedInLaunchConfig(bytes.NewBuffer(input).Bytes())
@@ -116,7 +116,7 @@ func TestVsCode_GebugInstalled(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			AppFs = afero.NewMemMapFs()
 			filePath := path.Join("testdata", test.name+".in")
-			input, err := ioutil.ReadFile(filePath)
+			input, err := os.ReadFile(filePath)
 			require.NoError(t, err)
 
 			err = AppFs.Mkdir(vscodeDirName, 0777)
