@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -50,7 +49,7 @@ func (s server) handleGetConfig(c *gin.Context) {
 		return
 	}
 
-	configData, err := ioutil.ReadFile(s.location)
+	configData, err := os.ReadFile(s.location)
 	if err != nil {
 		s.logger.Error("Failed to read configuration file", zap.String("location", s.location), zap.Error(err))
 		errorResponse(c, http.StatusInternalServerError, "unable to read config file")
