@@ -2,7 +2,6 @@ package input
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 
@@ -27,11 +26,11 @@ func LoadOrDefault(workDir string) (*config.Config, bool) {
 		OutputBinaryPath: "/app",
 		BuildCommand:     `go build -o {{.output_binary}}`,
 		RunCommand:       `{{.output_binary}}`,
-		RuntimeImage:     "golang:1.18",
+		RuntimeImage:     "golang:1.20",
 	}
 
 	configFilePath := config.FilePath(workDir, config.Path)
-	content, err := ioutil.ReadFile(configFilePath)
+	content, err := os.ReadFile(configFilePath)
 	if err != nil {
 		if !os.IsNotExist(err) {
 			zap.L().Error("Failed to read configuration file", zap.String("path", configFilePath), zap.Error(err))

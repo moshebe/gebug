@@ -2,7 +2,7 @@ package web
 
 import (
 	"bytes"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"testing"
 
@@ -59,7 +59,7 @@ func TestRenderDockerCompose(t *testing.T) {
 		require.NoError(t, err)
 
 		goldenPath := filepath.Join("testdata", test.goldenFile+".golden")
-		goldenData, err := ioutil.ReadFile(goldenPath)
+		goldenData, err := os.ReadFile(goldenPath)
 		require.NoError(t, err)
 
 		require.Equal(t, bytes.NewBuffer(goldenData).String(), got.String())
