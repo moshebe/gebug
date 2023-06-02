@@ -2,7 +2,7 @@ name: my-app
 output_binary: /app
 build_command: go build -o {{.output_binary}}
 run_command: '{{.output_binary}}'
-runtime_image: golang:1.18
+runtime_image: golang:1.20
 debugger_enabled: true
 debugger_port: 40000
 expose_ports: []
