@@ -39,7 +39,7 @@
     "sass-loader": "^13.2.2",
     "typescript": "~5.0.4",
     "vue-cli-plugin-bootstrap-vue": "~0.8.2",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.14"
   },
   "eslintConfig": {
     "root": true,
