@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/eslint-plugin": "^7.3.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@vue/cli-plugin-babel": "~5.0.8",
     "@vue/cli-plugin-eslint": "~5.0.8",
