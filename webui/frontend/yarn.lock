@@ -5695,10 +5695,10 @@ safe-buffer@5.2.1, safe-buffer@>=5.1.0, safe-buffer@^5.1.0, safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass-loader@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-14.0.0.tgz#fc8390f7cc16863622cd16f3ea07b36ba6ea8f91"
-  integrity sha512-oceP9wWbep/yRJ2+sMbCzk0UsXsDzdNis+N8nu9i5GwPXjy6v3DNB6TqfJLSpPO9k4+B8x8p/CEgjA9ZLkoLug==
+sass-loader@^14.2.1:
+  version "14.2.1"
+  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-14.2.1.tgz#db9ad96b56dc1c1ea546101e76375d5b008fec70"
+  integrity sha512-G0VcnMYU18a4N7VoNDegg2OuMjYtxnqzQWARVWCIVSZwJeiL9kg8QMsuIZOplsJgTzZLF6jGxI3AClj8I9nRdQ==
   dependencies:
     neo-async "^2.6.2"
 
