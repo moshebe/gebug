@@ -56,7 +56,7 @@ jobs:
         run: make coverage
       - name: Upload coverage
         if: github.repository_owner == 'moshebe'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage.txt
