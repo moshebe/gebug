@@ -8,7 +8,7 @@ jobs:
     name: go-releaser
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # See: https://goreleaser.com/ci/actions/
       - run: git fetch --force --tags
